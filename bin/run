@@ -3,7 +3,7 @@
 # Stop on errors
 # See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
 set -Eeuo pipefail
-
+test -e var/newCharlaBots.sqlite3
 export FLASK_ENV=development
 FLASK_ENV=development
 export FLASK_APP=newCharlaBots

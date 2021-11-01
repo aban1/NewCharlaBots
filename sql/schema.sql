@@ -7,7 +7,7 @@ CREATE TABLE bots(
 );
 
 CREATE TABLE languages(
-  name INTEGER PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
   ifAny VARCHAR(20) NOT NULL,
   andNotAny VARCHAR(20) NOT NULL,
   ifAll VARCHAR(20) NOT NULL,
@@ -18,15 +18,16 @@ CREATE TABLE languages(
   endIf VARCHAR(20) NOT NULL,
   pickRandom VARCHAR(20) NOT NULL,
   endPick VARCHAR(20) NOT NULL,
+  PRIMARY KEY(NAME)
 );
 
 CREATE TABLE bot_versions(
   botid VARCHAR(20) NOT NULL, 
   botname VARCHAR(20) NOT NULL, 
-  timeDate DATETIME DEFAULT (datetime()), #this is not really needed
-  version INTEGER AUTOINCREMENT, #added this to keep track of the versions
+  timeDate DATETIME DEFAULT (datetime()), 
+  version INTEGER NOT NULL, 
   canonical VARCHAR(1000) NOT NULL, 
   PRIMARY KEY(botid),
-  FOREIGN KEY (botid) REFERENCES bots(username) #do we need this
+  FOREIGN KEY (botid) REFERENCES bots(username) 
 );
 
