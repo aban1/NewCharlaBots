@@ -16,7 +16,7 @@
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\n // This method is only called once\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1__.render(\n/*#__PURE__*/\n// Insert the post component into the DOM\nreact__WEBPACK_IMPORTED_MODULE_0__.createElement(\"p\", null, \" test \"), document.getElementById('reactEntry'));\n\n//# sourceURL=webpack://newCharlaBots/./newCharlaBots/js/main.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\n // This method is only called once\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1__.render( // Insert the post component into the DOM\n//TODO: crete a bot component,\ndocument.getElementById('reactEntry'));\n\n//# sourceURL=webpack://newCharlaBots/./newCharlaBots/js/main.jsx?");
 
 /***/ }),
 

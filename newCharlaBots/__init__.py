@@ -15,3 +15,5 @@ app.config.from_object('newCharlaBots.config')
 # $ export INSTA485_SETTINGS=secret_key_config.py
 app.config.from_envvar('NEWCHARLABOTS_SETTINGS', silent=True)
 
+
+import newCharlaBots.views

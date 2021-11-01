@@ -5,6 +5,6 @@ import ReactDOM from 'react-dom';
 ReactDOM.render(
 
   // Insert the post component into the DOM
-  <p> test </p> ,
+  //TODO: crete a bot component,
   document.getElementById('reactEntry'),
 );

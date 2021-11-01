@@ -1,0 +1,1 @@
+from newCharlaBots.views.index import show_index
