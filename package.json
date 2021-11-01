@@ -1,7 +1,7 @@
 {
-  "name": "NewCharlaBots",
+  "name": "newCharlaBots",
   "version": "0.1.0",
-  "description": "NewCharlaBots front end",
+  "description": "newCharlaBots front end",
   "main": "newCharlaBots/js/main.jsx",
   "author": "aban",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "eslint-plugin-react": ">=7.26.0",
     "eslint-plugin-react-hooks": ">=4.2.0",
     "webpack": ">=5.54.0",
-    "webpack-cli": ">=4.8.0"
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "moment": ">=2.29.1",

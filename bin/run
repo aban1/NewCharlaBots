@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Stop on errors
+# See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+set -Eeuo pipefail
+
+export FLASK_ENV=development
+FLASK_ENV=development
+export FLASK_APP=newCharlaBots
+FLASK_APP=newCharlaBots
+npx webpack
+flask run --host 0.0.0.0 --port 8000

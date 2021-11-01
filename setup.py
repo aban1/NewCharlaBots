@@ -6,9 +6,9 @@ NewCharlaBots python package configuration.
 from setuptools import setup
 
 setup(
-    name='NewCharlaBots',
+    name='newCharlaBots',
     version='0.1.0',
-    packages=['NewCharlaBots'],
+    packages=['newCharlaBots'],
     include_package_data=True,
     install_requires=[
         'arrow',
