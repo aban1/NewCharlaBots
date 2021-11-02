@@ -17,3 +17,4 @@ app.config.from_envvar('NEWCHARLABOTS_SETTINGS', silent=True)
 
 
 import newCharlaBots.views
+import newCharlaBots.api
