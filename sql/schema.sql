@@ -1,7 +1,8 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE bots(
-  botid VARCHAR(20) NOT NULL,
+  botid VARCHAR(20) NOT NULL AUTO_INCREMENT,
+  botname VARCHAR(20) NOT NULL,
   canonical VARCHAR(1000) NOT NULL,
   PRIMARY KEY(botid)
 );

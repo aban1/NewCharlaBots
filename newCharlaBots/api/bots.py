@@ -4,11 +4,16 @@ from newCharlaBots.model import get_db
 import newCharlaBots
 
 
-@newCharlaBots.app.route("/api/")
+@newCharlaBots.app.route("/createBot/", methods=['GET'])
 def create_bot():
 
     connection = get_db()
 
-    context = {"test": "testst"}
+    # botname = request.args.get("botname")
 
-    return flask.jsonify(**context), 204
+    # cannonicalCode = request.args.get("cannonicalCode")
+
+    connection.execute("INSERT INTO bots (cannonical) VALUES (?)", 
+    	("cannonicalCode"))
+
+    return flask.jsonify(**context), 200
