@@ -4,15 +4,11 @@ from newCharlaBots.model import get_db
 import newCharlaBots
 
 
-@newCharlaBots.app.route('/api/', methods=['GET'])
+@newCharlaBots.app.route("/api/")
 def create_bot():
 
-	connection = get_db()
+    connection = get_db()
 
+    context = {"test": "testst"}
 
-	context = {}
-
-	return flask.jsonify(**context), 204
-
-
-
+    return flask.jsonify(**context), 204
