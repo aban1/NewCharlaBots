@@ -1,7 +1,9 @@
 PRAGMA foreign_keys = ON;
 
+-- sqlite3 var/NewCharlaBots.sqlite3 < sql/schema.sql
+
 CREATE TABLE bots(
-  botid VARCHAR(20) NOT NULL AUTO_INCREMENT,
+  botid INTEGER NOT NULL,
   botname VARCHAR(20) NOT NULL,
   canonical VARCHAR(1000) NOT NULL,
   PRIMARY KEY(botid)
