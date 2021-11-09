@@ -34,9 +34,26 @@ def edit_language():
     	" replyLine=?, startReply=?, endReply=?, endIf=?, pickRandom=?, endPick=? WHERE languageid=?"
     	, ("2","1","1","4","1","1","1","1","1","1","1","10"))
 
-  
+
 
     context = {}
+
+    return flask.jsonify(**context), 200
+
+
+@newCharlaBots.app.route("/getLanguageData/")
+def get_language_data():
+
+    connection = get_db()
+
+    # botname = request.args.get("botname")
+
+    # cannonicalCode = request.args.get("cannonicalCode")
+
+    data = connection.execute("SELECT * FROM languages WHERE languageid=?", "2").fetchone()
+  
+
+    context = data
 
     return flask.jsonify(**context), 200
 
