@@ -32,7 +32,7 @@ def edit_language():
 
     connection.execute("UPDATE languages SET name=?, ifAny=?, andNotAny=?, ifAll=?, andNotAll=?,"
     	" replyLine=?, startReply=?, endReply=?, endIf=?, pickRandom=?, endPick=? WHERE languageid=?"
-    	, ("2","1","1","4","1","1","1","1","1","1","1","10"))
+    	, ("2","1","1","4","1","1","1","1","1","1","1","1"))
 
 
 
@@ -54,6 +54,24 @@ def get_language_data():
   
 
     context = data
+
+    return flask.jsonify(**context), 200
+
+
+
+@newCharlaBots.app.route("/deleteLanguage/")
+def delete_language():
+
+    connection = get_db()
+
+    # botname = request.args.get("botname")
+
+    # cannonicalCode = request.args.get("cannonicalCode")
+
+    data = connection.execute("DELETE FROM languages WHERE languageid=?", "1")
+  
+
+    context = {}
 
     return flask.jsonify(**context), 200
 

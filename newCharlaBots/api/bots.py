@@ -14,7 +14,7 @@ def create_bot():
     # cannonicalCode = request.args.get("cannonicalCode")
 
     connection.execute("INSERT INTO bots (botname, canonical) VALUES (?,?)", 
-    	("botname2", "cannonicalCode"))
+    	("botname3", "cannonicalCode"))
 
     context = {}
 
@@ -31,7 +31,7 @@ def edit_bot():
 
     # cannonicalCode = request.args.get("cannonicalCode")
 
-    connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?", ("test 2", "update name", "1"))
+    connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?", ("botname3", "update name", "1"))
 
     context = {}
 
@@ -57,6 +57,30 @@ def get_bot_data():
 
 
     context = data
+
+
+    return flask.jsonify(**context), 200
+
+    
+@newCharlaBots.app.route("/deleteBot/")
+def delete_bot():
+
+    connection = get_db()
+
+    # botname = request.args.get("botname")
+
+    # cannonicalCode = request.args.get("cannonicalCode")
+
+    data = connection.execute("DELETE FROM bots WHERE botid=?" , ("1"))
+
+    # context = {
+    #     "name" : data.botname,
+    #     "code" : data.canonical,
+    #     "botid" : data.botid
+    # }
+
+
+    context = {}
 
 
     return flask.jsonify(**context), 200

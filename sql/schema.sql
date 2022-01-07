@@ -3,10 +3,9 @@ PRAGMA foreign_keys = ON;
 -- sqlite3 var/NewCharlaBots.sqlite3 < sql/schema.sql
 
 CREATE TABLE bots(
-  botid INTEGER NOT NULL AUTO_INCREMENT,
+  botid INTEGER PRIMARY KEY AUTOINCREMENT,
   botname VARCHAR(20) NOT NULL,
-  canonical VARCHAR(1000) NOT NULL,
-  PRIMARY KEY(botid)
+  canonical VARCHAR(1000) NOT NULL
 );
 
 CREATE TABLE languages(
@@ -25,12 +24,12 @@ CREATE TABLE languages(
 );
 
 CREATE TABLE bot_versions(
-  botid VARCHAR(20) NOT NULL, 
+  botid INTEGER NOT NULL, 
   botname VARCHAR(20) NOT NULL, 
   timeDate DATETIME DEFAULT (datetime()), 
   version INTEGER NOT NULL, 
   canonical VARCHAR(1000) NOT NULL, 
   PRIMARY KEY(botid),
-  FOREIGN KEY (botid) REFERENCES bots(username) 
+  FOREIGN KEY (botid) REFERENCES bots(botid) 
 );
 
