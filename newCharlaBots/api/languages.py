@@ -45,14 +45,9 @@ def edit_language():
 def get_language_data():
 
     connection = get_db()
-
     # botname = request.args.get("botname")
-
     # cannonicalCode = request.args.get("cannonicalCode")
-
     data = connection.execute("SELECT * FROM languages WHERE languageid=?", "2").fetchone()
-  
-
     context = data
 
     return flask.jsonify(**context), 200
@@ -72,6 +67,26 @@ def delete_language():
   
 
     context = {}
+
+    return flask.jsonify(**context), 200
+
+
+
+@newCharlaBots.app.route("/getAllLanguageNames/")
+def lang_names():
+
+    connection = get_db()
+    # botname = request.args.get("botname")
+    # cannonicalCode = request.args.get("cannonicalCode")
+
+    data = connection.execute("SELECT name FROM languages").fetchall()
+
+    names = [] 
+
+    for name in data:
+        names.append(name["name"])
+    
+    context = {"data" : names}
 
     return flask.jsonify(**context), 200
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '/NewCharlaBots/style/form.css';
+//import '/NewCharlaBots/style/form.css';
 
 class Form extends React.Component {
   /* Display number of image and post owner of a single post */
@@ -43,12 +43,41 @@ class Form extends React.Component {
 
   handleSelection(selection) {
 
-    console.log(selection);
 
+    // var j = ['{"name": "1"},{"name": "1"}'];
+    // var x = JSON.parse(j);
+    
+    // alert(x.name)
 
+    //console.log(selection);
+
+    if(selection != "button4"){
+      //options = [];
+      const url = '/getAllLanguageNames/';
+      
+      fetch(url, {})
+        .then(response => response.json())
+        .then((data) =>{
+
+          let options = [];
+          let language = "button";
+          let count = 5;
+
+          for (const name in data.data){
+            options.push({text: data.data[name], key: language + count});
+            count ++;
+          }
+          //console.log(options)
+
+        this.setState({
+          options : options
+        })
+
+        console.log(data)
+      })
   }
 
-  
+}
 
   render() {
     // This line automatically assigns this.state.imgUrl to the const variable imgUrl
