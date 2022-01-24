@@ -4,16 +4,9 @@ import PropTypes from 'prop-types';
 
 class Form extends React.Component {
   /* Display number of image and post owner of a single post */
- 
-  
-
 
   constructor(props) {
     // Initialize mutable state
-
-    
-
-
 
     super(props);
     this.state = {
@@ -25,8 +18,15 @@ class Form extends React.Component {
         {text :'Have two Bots Chat', key: 'button3'},
         {text :'Create a Bot Language', key: 'button4'},
       ],
+
+      action: '',
+      botChosen: '',
+      botLanguage: ''
      
     };
+
+
+  
 
   }
 
@@ -42,41 +42,79 @@ class Form extends React.Component {
   // const handleSelection = (selection) => { 
 
   handleSelection(selection) {
+    console.log("in handle selection" + selection)
 
 
-    // var j = ['{"name": "1"},{"name": "1"}'];
-    // var x = JSON.parse(j);
-    
-    // alert(x.name)
+    //chat with a bot
+    if (selection == "button0"){
+      console.log("in button0")
 
-    //console.log(selection);
-
-    if(selection != "button4"){
-      //options = [];
-      const url = '/getAllLanguageNames/';
-      
+      const url = '/getAllBotNames/';
       fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
 
           let options = [];
-          let language = "button";
-          let count = 5;
+          let bot = "bot";
 
-          for (const name in data.data){
-            options.push({text: data.data[name], key: language + count});
-            count ++;
+          console.log(data)
+          // for(int i = 0; i < data.)
+          for (const index in data.data){
+            options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
           }
-          //console.log(options)
 
         this.setState({
-          options : options
+          options : options,
+          action: 'chat'
         })
-
-        console.log(data)
+        //console.log(this.state)      
       })
+    } 
+    else if(selection == "button1" || selection == "button2"){
+      const url = '/getAllLanguageNames/';
+      fetch(url, {})
+        .then(response => response.json())
+        .then((data) =>{
+
+          let options = [];
+          let action = '';
+          let button = "button";
+          let key = '';
+          let count = 5;
+
+          console.log(data)
+
+          for (const name in data.data){
+            options.push({text: data.data[name], key: button + count});
+            count ++;
+          }
+
+        if (selection == "button1"){
+          action = 'create';
+        }
+        else if (selection == "button2"){
+          action = 'edit';
+        }
+
+        this.setState({
+          options : options,
+          action: action
+        })
+        //console.log(this.state)      
+      })
+  }//button0-2
+
+  //have 2 bots chat
+  else if(selection == "button3" ){
+
+     
+
   }
 
+  //create language
+  if(selection == "button4" ){
+
+  }
 }
 
   render() {

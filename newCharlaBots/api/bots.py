@@ -85,3 +85,31 @@ def delete_bot():
 
     return flask.jsonify(**context), 200
 
+
+
+@newCharlaBots.app.route("/getAllBotNames/")
+def get_bot_names():
+
+    connection = get_db()
+
+    # botname = request.args.get("botname")
+
+    # cannonicalCode = request.args.get("cannonicalCode")
+
+    data = connection.execute("SELECT * FROM bots").fetchall()
+
+    names = []
+
+    for data in data:
+        names.append({"name":data["botname"], "key":data["botid"]})
+
+    context = {"data" : names}
+
+    # context = {
+    #     "name" : data.botname,
+    #     "code" : data.canonical,
+    #     "botid" : data.botid
+    # }
+
+
+    return flask.jsonify(**context), 200
