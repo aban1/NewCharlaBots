@@ -15,40 +15,25 @@ class Form extends React.Component {
         {text :'Chat with a Bot', key: 'button0'},
         {text :'Create a Bot', key: 'button1'},
         {text :'Edit a Bot', key: 'button2'},
-        {text :'Have two Bots Chat', key: 'button3'},
+        {text :'Chat with Two Bots', key: 'button3'},
         {text :'Create a Bot Language', key: 'button4'},
       ],
 
       action: '',
       botChosen: '',
       botLanguage: ''
-     
     };
-
-
-  
-
   }
 
   componentDidMount() {
     // This line automatically assigns this.props.url to the const variable url
     const { url } = this.props;
-
-
   }
 
 
 
-  // const handleSelection = (selection) => { 
-
-  handleSelection(selection) {
-    console.log("in handle selection" + selection)
-
-
-    //chat with a bot
-    if (selection == "button0"){
-      console.log("in button0")
-
+  //handles selection to chat with a bot
+  chatWithBot(selection){
       const url = '/getAllBotNames/';
       fetch(url, {})
         .then(response => response.json())
@@ -65,86 +50,143 @@ class Form extends React.Component {
 
         this.setState({
           options : options,
-          action: 'chat'
         })
-        //console.log(this.state)      
       })
-    } 
-    else if(selection == "button1" || selection == "button2"){
-      const url = '/getAllLanguageNames/';
-      fetch(url, {})
-        .then(response => response.json())
-        .then((data) =>{
 
-          let options = [];
-          let action = '';
-          let button = "button";
-          let key = '';
-          let count = 5;
+    let action = (selection == "button0") ?  "chat1": "chat2";
 
-          console.log(data)
+    this.setState({
+      action : action
+    })
 
-          for (const name in data.data){
-            options.push({text: data.data[name], key: button + count});
-            count ++;
-          }
+  } 
 
-        if (selection == "button1"){
-          action = 'create';
-        }
-        else if (selection == "button2"){
-          action = 'edit';
+   //handles selection to chat with a bot
+   selectBotToEdit(selection){
+    const url = '/getAllBotNames/';
+    fetch(url, {})
+      .then(response => response.json())
+      .then((data) =>{
+
+        let options = [];
+        let bot = "editBot";
+
+        console.log(data)
+        // for(int i = 0; i < data.)
+        for (const index in data.data){
+          options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
         }
 
+      this.setState({
+        options : options,
+      })
+    })
+
+  let action = "chooseBotToEdit";
+
+  this.setState({
+    action : action
+  })
+
+} 
+  
+  //edit a bot
+  editBot(selection){
+    const url = '/getAllLanguageNames/';
+    fetch(url, {})
+      .then(response => response.json())
+      .then((data) =>{
+
+        let options = [];
+        let language = "language";
+
+        for (const index in data.data){
+          options.push({text: data.data[index]["name"], key: language +  data.data[index]["key"]});
+        }
+        let action = (selection == "button1") ? "createBot" : "editBot";
         this.setState({
           options : options,
           action: action
         })
-        //console.log(this.state)      
-      })
-  }//button0-2
-
-  //have 2 bots chat
-  else if(selection == "button3" ){
-
-     
+    })
 
   }
 
-  //create language
-  if(selection == "button4" ){
+  createBot(selection){
+    const url = '/getAllLanguageNames/';
+    fetch(url, {})
+      .then(response => response.json())
+      .then((data) =>{
+
+        let options = [];
+        let language = "languageToEdit";
+
+        for (const index in data.data){
+          options.push({text: data.data[index]["name"], key: language +  data.data[index]["key"]});
+        }
+        let action = (selection == "button1") ? "createBot" : "editBot";
+        this.setState({
+          options : options,
+          action: action
+        })
+    })
 
   }
+
+  createLanguage(){
+    //TODO
+    this.setState({
+      action: "createLanguage"
+    })
+  }
+
+
+  handleSelection(selection) {
+    console.log(selection)
+    if (selection == "button0" || selection == "button3"){
+      this.chatWithBot(selection);
+    }
+    else if (selection == "button1"){
+      this.editBot(selection);
+    }
+    else if (selection == "button2"){
+      this.createBot(selection);
+    }
+    
+    else if(selection == "button4" ){
+      this.createLanguage();
+    }
+    //edit a bot --
+    else if (selection.startsWith("languageToEdit")){
+      //if we came from create bot, we don't do this
+      this.selectBotToEdit(selection);
+      this.setState({
+        botLanguage : selection
+        })
+
+
+
+    }
+    //check if selection starts with language
+    //options  = list of all bots 
+    //update state with selected language
+    
 }
 
   render() {
-    // This line automatically assigns this.state.imgUrl to the const variable imgUrl
-    // and this.state.owner to the const variable owner
-
-  // let options = [
-  //   {text :'Chat with a Bot', key: 'button0'},
-  //   {text :'Create a Bot', key: 'button1'},
-  //   {text :'Edit a Bot', key: 'button2'},
-  //   {text :'Have two Bots Chat', key: 'button3'},
-  //   {text :'Create a Bot Language', key: 'button4'},
-  // ]
-
-
-  //console.log(options)
-
+  // This line automatically assigns this.state.imgUrl to the const variable imgUrl
+  // and this.state.owner to the const variable owner
   let allOptions = this.state.options.map((answerOption) => (
-
-      <div key = {answerOption.key}>
-
+      <div key = {answerOption.key}> 
       <button key = {answerOption.key} 
         style={{backgroundColor:'#F0F8FF'}}
         onClick={() => this.handleSelection(answerOption.key)}>
           {answerOption.text}</button> <br></br>
-        
       </div>
 
-
     ));
+
+
 
     // Render number of post image and post owner
     return (
@@ -152,24 +194,46 @@ class Form extends React.Component {
       <div> 
 
         <div>
-          I want to: <br></br>
+        {(this.state.action == '') ?(
+          <div>
+            I want to: <br></br>
+              <div className='options'>
+                {allOptions}
+              </div>
+          </div>
+          ):(null)}
 
-            {/*<button id="button0" onClick={this.handleSelection("0")}> Chat with a Bot </button> <br></br>
-            <button id="button1" onClick={this.handleSelection("1")}> Create a Bot </button> <br></br>
-            <button id="button2" onClick={this.handleSelection("2")}> Edit a Bot </button> <br></br>
-            <button id="button3" onClick={this.handleSelection("3")}> Have two Bots Chat </button> <br></br>
-            <button id="button4" onClick={this.handleSelection("4")}> Create a Bot Language </button> <br></br>*/}
+          <div> 
+            {(this.state.action == "chat1" || this.state.action == "chat2" || 
+            this.state.action == "chooseBotToEdit") ?(
+              <div>
+                Bot 1: <br></br>
+                {allOptions}
+              </div>
 
-            <div className='options'>
-            {allOptions}
+              ): (null)
+            }
+
+            {(this.state.action == "chat2")?(
+              <div>
+                Bot 2: <br></br>
+                {allOptions}
+              </div>
+              ):(null)
+            }
+
+            {(this.state.action == "createBot" || this.state.action == "editBot")?(
+              <div>
+                Select a Language: <br></br>
+                {allOptions}
+              </div>
+              ):(null)
+            }
           </div>
 
-        </div> 
-
         <br></br>
-
       </div>
-
+      </div>
     );
   }
 }

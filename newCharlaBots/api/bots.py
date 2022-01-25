@@ -43,21 +43,9 @@ def get_bot_data():
 
     connection = get_db()
 
-    # botname = request.args.get("botname")
-
-    # cannonicalCode = request.args.get("cannonicalCode")
-
     data = connection.execute("SELECT * FROM bots WHERE botid=?" , ("1")).fetchone()
 
-    # context = {
-    #     "name" : data.botname,
-    #     "code" : data.canonical,
-    #     "botid" : data.botid
-    # }
-
-
     context = data
-
 
     return flask.jsonify(**context), 200
 
@@ -67,17 +55,7 @@ def delete_bot():
 
     connection = get_db()
 
-    # botname = request.args.get("botname")
-
-    # cannonicalCode = request.args.get("cannonicalCode")
-
     data = connection.execute("DELETE FROM bots WHERE botid=?" , ("1"))
-
-    # context = {
-    #     "name" : data.botname,
-    #     "code" : data.canonical,
-    #     "botid" : data.botid
-    # }
 
 
     context = {}
@@ -92,10 +70,6 @@ def get_bot_names():
 
     connection = get_db()
 
-    # botname = request.args.get("botname")
-
-    # cannonicalCode = request.args.get("cannonicalCode")
-
     data = connection.execute("SELECT * FROM bots").fetchall()
 
     names = []
@@ -104,12 +78,5 @@ def get_bot_names():
         names.append({"name":data["botname"], "key":data["botid"]})
 
     context = {"data" : names}
-
-    # context = {
-    #     "name" : data.botname,
-    #     "code" : data.canonical,
-    #     "botid" : data.botid
-    # }
-
 
     return flask.jsonify(**context), 200

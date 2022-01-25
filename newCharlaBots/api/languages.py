@@ -45,8 +45,6 @@ def edit_language():
 def get_language_data():
 
     connection = get_db()
-    # botname = request.args.get("botname")
-    # cannonicalCode = request.args.get("cannonicalCode")
     data = connection.execute("SELECT * FROM languages WHERE languageid=?", "2").fetchone()
     context = data
 
@@ -58,10 +56,6 @@ def get_language_data():
 def delete_language():
 
     connection = get_db()
-
-    # botname = request.args.get("botname")
-
-    # cannonicalCode = request.args.get("cannonicalCode")
 
     data = connection.execute("DELETE FROM languages WHERE languageid=?", "1")
   
@@ -76,21 +70,14 @@ def delete_language():
 def lang_names():
 
     connection = get_db()
-    # botname = request.args.get("botname")
-    # cannonicalCode = request.args.get("cannonicalCode")
 
-    data = connection.execute("SELECT name FROM languages").fetchall()
+    data = connection.execute("SELECT * FROM languages").fetchall()
 
     names = [] 
 
-    for name in data:
-        names.append(name["name"])
+    for data in data:
+        names.append({"name": data["name"], "key":data["languageid"]})
     
     context = {"data" : names}
 
     return flask.jsonify(**context), 200
-
-
-
-
-
