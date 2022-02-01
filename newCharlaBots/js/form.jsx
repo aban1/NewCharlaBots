@@ -162,15 +162,22 @@ class Form extends React.Component {
       this.selectBotToEdit(selection);
       this.setState({
         botLanguage : selection
-        })
-
-
+      })
 
     }
     //check if selection starts with language
     //options  = list of all bots 
     //update state with selected language
     
+    //if selection =  action is edit bot
+    else if (selection.startsWith("editBot")){
+
+      //take in bot to edit as parameter
+      // window.open("/editor.html/", target = "_blank")
+      //"editbot3"
+      window.location.replace("/editor?botid="+selection.substring(7));
+
+    }
 }
 
   render() {
