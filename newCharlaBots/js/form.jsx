@@ -174,9 +174,7 @@ class Form extends React.Component {
 
       //take in bot to edit as parameter
       // window.open("/editor.html/", target = "_blank")
-      //"editbot3"
       window.location.replace("/editor?botid="+selection.substring(7));
-
     }
 }
 

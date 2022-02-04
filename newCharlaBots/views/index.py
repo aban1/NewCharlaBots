@@ -17,6 +17,6 @@ def show_editor():
     botid = flask.request.args.get('botid')
 
 
-    context = { "botid" : botid}
+    context = { "botid" : botid }
 
     return flask.render_template("editor.html", **context)
