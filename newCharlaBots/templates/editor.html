@@ -13,7 +13,7 @@
         <h1> Edit a Bot </h1>
     </div>
 
-    <h1>{{botid}}</h1>
+    <div style="visibility: hidden;" id="botid"> {{botid}} </div>
 
     <label for="botname">Name:</label> 
     <input type="text" id="botname" name="botname"><br>
@@ -28,18 +28,14 @@
     <br><br>
     <button><a href="/">Back to Home</a></button> 
 
-    <!-- Load JavaScript -->
-    <script type = "text/javascript" src="/js/test.js"></script> 
-    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/editor.jsx') }}"></script>  -->
+    
+      <div id="Editor" style="text-align: center;">
+          Loading ...
+      </div>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script> 
 
-    <script>
-        
-        function interpretCode() {
-            console.log("here");
-            //grab code
-        }
-    </script>
 
 </body>
 

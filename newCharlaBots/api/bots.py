@@ -38,14 +38,17 @@ def edit_bot():
     return flask.jsonify(**context), 200
 
 
+
 @newCharlaBots.app.route("/getBotData/")
 def get_bot_data():
 
     connection = get_db()
 
-    data = connection.execute("SELECT * FROM bots WHERE botid=?" , ("1")).fetchone()
+    botid = flask.request.args.get("botid")
 
-    context = data
+    data = connection.execute("SELECT * FROM bots WHERE botid=?" , ("2")).fetchone()
+
+    context = {"data" : data}
 
     return flask.jsonify(**context), 200
 
