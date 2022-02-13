@@ -11,8 +11,17 @@ $(document).ready(function () {
         .then((data) =>{
 
         console.log(data)
+
+        document.getElementById("botname").value = data.data["botname"];
+        document.getElementById("canonical").value = data.data["canonical"];
+
+        console.log(data.data["botname"]);
+        console.log(document.getElementById("botname").innerHTML);
+
         
     })
+
+
 
 });
 

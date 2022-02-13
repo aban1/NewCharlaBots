@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="./style/form.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/form.css') }}">
     <title>CharlaBots</title>
 </head>
 
@@ -22,5 +22,26 @@
       <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script> 
 
 </body>
+<!-- form.css having problems with loader, style will go here for now -->
+
+<style>
+    body{
+        background-color :  #b1c8e9;
+    }
+
+    #title{
+        text-align: center;
+        font-family: Tahoma, sans-serif;
+        font-size: 400;
+        padding-top: 7%;
+    }
+    
+    .btn{
+        background-color : "#b1c8e9";
+        font-size: 70;
+        
+    }
+
+</style>
 
 </html>

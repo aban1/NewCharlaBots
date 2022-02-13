@@ -184,6 +184,7 @@ class Form extends React.Component {
   let allOptions = this.state.options.map((answerOption) => (
       <div key = {answerOption.key}> 
       <button key = {answerOption.key} 
+              style = "font-size : 2000px"
         style={{backgroundColor:'#F0F8FF'}}
         onClick={() => this.handleSelection(answerOption.key)}>
           {answerOption.text}</button> <br></br>

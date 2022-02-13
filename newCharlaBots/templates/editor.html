@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="./style/form.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/form.css') }}">
     <title>Edit a Bot</title>
 </head>
 
@@ -18,8 +18,10 @@
     <label for="botname">Name:</label> 
     <input type="text" id="botname" name="botname"><br>
 
-    <label for="desc">Description:</label><br>
-    <input type="text" id="desc" name="desc"><br>
+
+    <!-- going to use comments instead -->
+    <!-- <label for="desc">Description:</label><br>
+    <input type="text" id="desc" name="desc"><br> -->
 
     <label for="canonical">Code:</label><br>
     <input type="text" id="canonical" name="canonical"><br>
@@ -28,10 +30,6 @@
     <br><br>
     <button><a href="/">Back to Home</a></button> 
 
-    
-      <div id="Editor" style="text-align: center;">
-          Loading ...
-      </div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script> 

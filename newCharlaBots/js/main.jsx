@@ -2,6 +2,7 @@
 import ReactDOM from 'react-dom';
 import MakeBot from './makeBot';
 import Form from './form';
+import '../static/style/form.css'
 
 // This method is only called once
 ReactDOM.render(
