@@ -174,7 +174,7 @@ class Form extends React.Component {
 
       //take in bot to edit as parameter
       // window.open("/editor.html/", target = "_blank")
-      window.location.replace("/editor?botid="+selection.substring(7));
+      window.location.replace("/editor?botid="+selection.substring(7)+"&langid="+ this.state.botLanguage.slice(-1));
     }
 }
 
@@ -183,11 +183,14 @@ class Form extends React.Component {
   // and this.state.owner to the const variable owner
   let allOptions = this.state.options.map((answerOption) => (
       <div key = {answerOption.key}> 
-      <button key = {answerOption.key} 
-              style = "font-size : 2000px"
-        style={{backgroundColor:'#F0F8FF'}}
+      <div className = "btn-div">
+      <button className = "btn" 
+              key = {answerOption.key} 
+              // style = "font-size : 2000px"
+        // style={{backgroundColor:"red"}}
         onClick={() => this.handleSelection(answerOption.key)}>
           {answerOption.text}</button> <br></br>
+      </div>
       </div>
 
     ));

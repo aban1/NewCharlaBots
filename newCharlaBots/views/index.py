@@ -15,8 +15,12 @@ def show_editor():
     """Display / route."""
 
     botid = flask.request.args.get('botid')
+    langid = flask.request.args.get('langid')
+
+    args = [botid, langid]
 
 
-    context = { "botid" : botid }
+    context = { "botid" : args}
+
 
     return flask.render_template("editor.html", **context)

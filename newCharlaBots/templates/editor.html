@@ -4,18 +4,24 @@
 
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/form.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/editor.css') }}"> -->
     <title>Edit a Bot</title>
+    <!-- <link rel="stylesheet" href="../style/editor.css"> -->
 </head>
 
 <body>
+  
+
+    <div style="visibility: hidden;" id="botid"> {{botid[0]}} </div>
+    <div style="visibility: hidden;" id="langid"> {{botid[1]}} </div>
+
+    <div id = "form">
+
     <div id="title">
         <h1> Edit a Bot </h1>
     </div>
 
-    <div style="visibility: hidden;" id="botid"> {{botid}} </div>
-
-    <label for="botname">Name:</label> 
+    <label id = "name" for="botname">Name:</label> <br>
     <input type="text" id="botname" name="botname"><br>
 
 
@@ -23,18 +29,31 @@
     <!-- <label for="desc">Description:</label><br>
     <input type="text" id="desc" name="desc"><br> -->
 
-    <label for="canonical">Code:</label><br>
-    <input type="text" id="canonical" name="canonical"><br>
+    <!-- todo: change rows to be a percentage -->
+    <label id = "name" for="canonical">Code:</label><br>
+    <textarea type="text" id="canonical" name="canonical" rows="20" cols="20"></textarea><br>
     <br>
-    <input type="submit" value="Save this Bot" onclick = "interpretCode()">
+    <input type="submit" value="Save this Bot" onclick = "saveBot()">
     <br><br>
     <button><a href="/">Back to Home</a></button> 
-
+    </div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script> 
-
-
 </body>
+
+<style>
+
+    #canonical{
+        width: 70%;
+    }
+    #form{
+        text-align: center;
+    }
+    #name{
+        font-size: 30px;
+    }
+
+</style>
 
 </html>

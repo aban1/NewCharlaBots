@@ -14,7 +14,7 @@ def create_bot():
     # cannonicalCode = request.args.get("cannonicalCode")
 
     connection.execute("INSERT INTO bots (botname, canonical) VALUES (?,?)", 
-    	("botname3", "cannonicalCode"))
+    	("aryan", "if match any of hello, hi brief response Hello, there. It's a pleasure to make your acquaintance, test, testend match"))
 
     context = {}
 
@@ -31,7 +31,7 @@ def edit_bot():
 
     # cannonicalCode = request.args.get("cannonicalCode")
 
-    connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?", ("botname3", "update name", "1"))
+    connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?", ("if any happy reply no end if", "Mark", "1"))
 
     context = {}
 
@@ -46,7 +46,7 @@ def get_bot_data():
 
     botid = flask.request.args.get("botid")
 
-    data = connection.execute("SELECT * FROM bots WHERE botid=?" , ("2")).fetchone()
+    data = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid)).fetchone()
 
     context = {"data" : data}
 

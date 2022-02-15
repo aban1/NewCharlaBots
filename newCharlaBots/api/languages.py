@@ -14,7 +14,8 @@ def create_language():
 
     connection.execute("INSERT INTO languages (name, ifAny, andNotAny, ifAll, andNotAll,"
     	" replyLine, startReply, endReply, endIf, pickRandom, endPick) "
-    	"Values (?,?,?,?,?,?,?,?,?,?,?)", ("2","1","1","1","1","1","1","1","1","1","1"))
+    	"Values (?,?,?,?,?,?,?,?,?,?,?)", 
+        ("spanish-Verbose","si any","and not any spanish","if all spanish","and not all spanish","reply line spanish","start reply spanish","end reply spanish","end if spanish","pick random spanish","end pick spanish"))
 
     context = {}
 
