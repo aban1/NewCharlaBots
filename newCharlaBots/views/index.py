@@ -20,7 +20,7 @@ def show_editor():
     args = [botid, langid]
 
 
-    context = { "botid" : args}
+    context = { "botid" : args }
 
 
     return flask.render_template("editor.html", **context)

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import '/NewCharlaBots/style/form.css';
 
 class Form extends React.Component {
   /* Display number of image and post owner of a single post */

@@ -46,7 +46,8 @@ def edit_language():
 def get_language_data():
 
     connection = get_db()
-    data = connection.execute("SELECT * FROM languages WHERE languageid=?", "2").fetchone()
+    langID = flask.request.args.get("langid")
+    data = connection.execute("SELECT * FROM languages WHERE languageid=?", (langID)).fetchone()
     context = data
 
     return flask.jsonify(**context), 200
@@ -82,3 +83,5 @@ def lang_names():
     context = {"data" : names}
 
     return flask.jsonify(**context), 200
+
+

@@ -14,7 +14,7 @@ def create_bot():
     # cannonicalCode = request.args.get("cannonicalCode")
 
     connection.execute("INSERT INTO bots (botname, canonical) VALUES (?,?)", 
-    	("aryan", "if match any of hello, hi brief response Hello, there. It's a pleasure to make your acquaintance, test, testend match"))
+    	("aryan", "{ifAny} hi \n {replyLine} hello! \n {endIf}"))
 
     context = {}
 
