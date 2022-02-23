@@ -21,20 +21,28 @@ def create_bot():
     return flask.jsonify(**context), 200
 
 
-
+## with hardcoded values, delete this later
 @newCharlaBots.app.route("/editBot/")
 def edit_bot():
-
     connection = get_db()
-
-    # botname = request.args.get("botname")
-
-    # cannonicalCode = request.args.get("cannonicalCode")
-
     connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?", ("if any happy reply no end if", "Mark", "1"))
+    context = {}
+    return flask.jsonify(**context), 200
+
+@newCharlaBots.app.route("/updateBot/", methods =["PATCH"])
+def update_bot():
+    connection = get_db()
+    botid = flask.request.args.get("botID")
+    botname = flask.request.args.get("botName")
+
+    code = flask.request.args.get("canonicalCode")
+
+    
+
+    data_botID = connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?",
+        (code,botname,botid))
 
     context = {}
-
     return flask.jsonify(**context), 200
 
 
@@ -93,7 +101,7 @@ def get_bot_and_lang():
 
     langID = flask.request.args.get("langID")
     data_langID = connection.execute("SELECT * FROM languages WHERE languageid=?", (langID)).fetchone()
-
     context = {"botInfo" : data_botID, "langInfo" : data_langID}
 
     return flask.jsonify(**context), 200
+
