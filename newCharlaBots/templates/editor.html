@@ -4,13 +4,10 @@
 
 <head>
     <meta charset="utf-8"/>
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style/editor.css') }}"> -->
     <title>Edit a Bot</title>
-    <!-- <link rel="stylesheet" href="../style/editor.css"> -->
 </head>
 
 <body>
-  
 
     <div style="visibility: hidden;" id="botid"> {{botid[0]}} </div>
     <div style="visibility: hidden;" id="langid"> {{botid[1]}} </div>
@@ -23,11 +20,6 @@
 
     <label id = "name" for="botname">Name:</label> <br>
     <input type="text" id="botname" name="botname"><br>
-
-
-    <!-- going to use comments instead -->
-    <!-- <label for="desc">Description:</label><br>
-    <input type="text" id="desc" name="desc"><br> -->
 
     <!-- todo: change rows to be a percentage -->
     <label id = "name" for="canonical">Code:</label><br>
@@ -53,6 +45,10 @@
     #name{
         font-size: 30px;
     }
+    body{
+        background-color :  #d7e5f9;
+    }
+
 
 </style>
 
