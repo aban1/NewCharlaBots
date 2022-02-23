@@ -41,7 +41,7 @@ def edit_language():
 
     return flask.jsonify(**context), 200
 
-
+#mappings from canonical to user lang
 @newCharlaBots.app.route("/getLanguageData/")
 def get_language_data():
 

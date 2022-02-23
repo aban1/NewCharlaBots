@@ -31,6 +31,6 @@ CREATE TABLE bot_versions(
   version INTEGER NOT NULL, 
   canonical VARCHAR(1000) NOT NULL, 
   PRIMARY KEY(botid),
-  FOREIGN KEY (botid) REFERENCES bots(botid) 
+  FOREIGN KEY (botid) REFERENCES bots(botid)
 );
 
