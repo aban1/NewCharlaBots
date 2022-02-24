@@ -70,8 +70,6 @@ class Form extends React.Component {
         let options = [];
         let bot = "editBot";
 
-        console.log(data)
-        // for(int i = 0; i < data.)
         for (const index in data.data){
           options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
         }
