@@ -7,9 +7,6 @@ $(document).ready(function () {
     fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
-
-        let botID = document.getElementById("botid").innerHTML;
-        let langID = document.getElementById("langid").innerHTML;
         
         document.getElementById("botname").value = data.botInfo["botname"];
         
@@ -25,7 +22,7 @@ $(document).ready(function () {
 //translates canonical to user code
 function translateLineToUser(mapping, line){
     let translatedLine = "";
-
+    console.log(line);
     for (j = 0; j < line.length; j++){
         let keyword = "";
 
@@ -40,9 +37,8 @@ function translateLineToUser(mapping, line){
             let translatedKeyword = mapping[keyword].trim();
             
             //if it does not start w "and", if, end, add 4 spaces
-            if (!(translatedKeyword.startsWith("and") ||
-                translatedKeyword.startsWith("if") ||
-                translatedKeyword.startsWith("end"))){
+            if (!(keyword.startsWith("and") || keyword.startsWith("if") ||
+                keyword.startsWith("end"))){
                 translatedLine += "    " + translatedKeyword;
             }
             else{
@@ -57,16 +53,11 @@ function translateLineToUser(mapping, line){
             translatedLine += line[j];
         }
     }
-
     return translatedLine;
-
 }
 
-//TODO: fix spacing
 //translates canonical code to user code
 function translateCanonicalCode(mapping, canonicalCode){
-    //parse thru code until see {
-
     let translatedCode = "";
     let linesToTranslate = canonicalCode.split("////");
 
@@ -81,10 +72,9 @@ function translateCanonicalCode(mapping, canonicalCode){
 //what constitutes as an error?
 //just alert or tell them the error
 function saveBot(){
-    let botname = document.getElementById("botname").value;
     let langID = document.getElementById("langid").innerHTML;
     
-    let url = "/getLanguageData/?langid=" + (langID).toString().trim();
+    let url = "/getLanguageData/?langid=" + (langID).trim();
     fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
