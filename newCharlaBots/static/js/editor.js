@@ -121,7 +121,13 @@ function updateCanonicalCode(canonicalCode){
 }
 
 
-//NEXT STEPS: create bot 
+//NEXT STEPS: create bot
+//todo:
+    //add description
+    //add comments to code starting with "#"
+    //put the languages in so mark is not dissapointed
+    //start error checking:
+        //includes spelling errors, forgot end match...
 //be able to chat with a bot
 //edge case: i.e. if not happy and not sad
 //TODO: version history 
