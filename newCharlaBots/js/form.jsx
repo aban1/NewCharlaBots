@@ -41,8 +41,7 @@ class Form extends React.Component {
           let options = [];
           let bot = "bot";
 
-          console.log(data)
-          // for(int i = 0; i < data.)
+          // console.log(data)
           for (const index in data.data){
             options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
           }
@@ -139,7 +138,11 @@ class Form extends React.Component {
 
 
   handleSelection(selection) {
-    console.log(selection)
+    // console.log(selection)
+    // console.log("action item")
+    // console.log(this.state.action)
+    // alert(selection)
+    
     if (selection == "button0" || selection == "button3"){
       this.chatWithBot(selection);
     }
@@ -165,13 +168,15 @@ class Form extends React.Component {
     //check if selection starts with language
     //options  = list of all bots 
     //update state with selected language
-    
     //if selection =  action is edit bot
     else if (selection.startsWith("editBot")){
-
-      //take in bot to edit as parameter
-      // window.open("/editor.html/", target = "_blank")
+      //take in bot to edit & language as parameter
       window.location.replace("/editor?botid="+selection.substring(7)+"&langid="+ this.state.botLanguage.slice(-1));
+    }
+
+    else if (this.state.action.startsWith("createBot")){
+      //figure out what language we just clicked
+      window.location.replace("/create?" + "langid="+ selection.slice(-1));
     }
 }
 

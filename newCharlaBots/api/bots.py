@@ -9,12 +9,12 @@ def create_bot():
 
     connection = get_db()
 
-    # botname = request.args.get("botname")
+    botname = request.args.get("botName")
+    description = request.args.get("description")
+    cannonicalCode = request.args.get("canonicalCode")
 
-    # cannonicalCode = request.args.get("cannonicalCode")
-
-    connection.execute("INSERT INTO bots (botname, canonical) VALUES (?,?)", 
-    	("aryan", "{ifAny} hi \n {replyLine} hello! \n {endIf}"))
+    connection.execute("INSERT INTO bots (botname, description, canonical) VALUES (?,?, ?)", 
+    	(botname, description, cannonicalCode))
 
     context = {}
 
@@ -34,13 +34,14 @@ def update_bot():
     connection = get_db()
     botid = flask.request.args.get("botID")
     botname = flask.request.args.get("botName")
+    description = flask.request.args.get("description")
 
     code = flask.request.args.get("canonicalCode")
 
     
 
-    data_botID = connection.execute("UPDATE bots SET canonical=?, botname=? WHERE botid=?",
-        (code,botname,botid))
+    data_botID = connection.execute("UPDATE bots SET description=?, canonical=?, botname=? WHERE botid=?",
+        (description, code, botname, botid))
 
     context = {}
     return flask.jsonify(**context), 200

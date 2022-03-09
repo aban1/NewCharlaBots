@@ -1,7 +1,18 @@
+var isEditor = false;
 $(document).ready(function () {
+
     //get end of url to see what bot id we are looking for            
-    let botID = document.getElementById("botid").innerHTML;
+    isEditor = document.getElementById("titleText").innerHTML.includes("Edit");
+    //run the rest of ready func only if editing
+    if (!isEditor) return;
+    
+    let botID = "";
+    if (document.getElementById("botid")){
+        botID = document.getElementById("botid").innerHTML;
+    }
+
     let langID = document.getElementById("langid").innerHTML;
+
     let url = "/getBotAndLang/?botID=" + (botID).toString().trim() + "&langID=" + (langID).toString().trim();
 
     fetch(url, {})
@@ -12,6 +23,9 @@ $(document).ready(function () {
         
         let canonical = data.botInfo["canonical"];
         let mappings = data.langInfo;
+        
+        let description = data.botInfo["description"];
+        document.getElementById("description").value = description;
 
         let translatedCode = translateCanonicalCode(mappings, canonical);
         document.getElementById("canonical").value = translatedCode;
@@ -72,7 +86,10 @@ function translateCanonicalCode(mapping, canonicalCode){
 //what constitutes as an error?
 //just alert or tell them the error
 function saveBot(){
+    
     let langID = document.getElementById("langid").innerHTML;
+
+    console.log(langID)
     
     let url = "/getLanguageData/?langid=" + (langID).trim();
     fetch(url, {})
@@ -91,6 +108,7 @@ function saveBot(){
         }
         //send the updated code back to database
         updateCanonicalCode(canonicalCode);
+
     })
 }
 
@@ -111,19 +129,26 @@ function translateLineToCanonical(mapping, line){
     return line;
 }
 
-//should not change what the code looks like
+//sends updated code,description and values back to db
 function updateCanonicalCode(canonicalCode){
+    
+    let botName = document.getElementById("botname").value.toString().trim();
+    let description = document.getElementById("description").value;
 
-    let botID = document.getElementById("botid").innerHTML;
-    let botName = document.getElementById("botname").value;
-    let url = "/updateBot/?botID=" + (botID).toString().trim() + "&botName=" + (botName).toString().trim() + "&canonicalCode=" + canonicalCode;
-    fetch(url, {method: 'PATCH'});
+    if (isEditor){
+        let botID = document.getElementById("botid").innerHTML.toString().trim();    
+        let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
+        fetch(url, {method: 'PATCH'});    
+    }
+    else{
+        let url = "/createBot/?botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
+        fetch(url, {method: 'POST'});
+    }
 }
 
 
 //NEXT STEPS: create bot
 //todo:
-    //add description
     //add comments to code starting with "#"
     //put the languages in so mark is not dissapointed
     //start error checking:
