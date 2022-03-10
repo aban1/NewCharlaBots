@@ -29,3 +29,13 @@ def show_create():
     context = { "langid" : langid }
 
     return flask.render_template("create.html", **context)
+
+
+@newCharlaBots.app.route('/chat/')
+def show_chat():
+    """Display / route."""
+
+    botid = flask.request.args.get('botid')
+    context = { "botid" : botid }
+
+    return flask.render_template("chat.html", **context)

@@ -10,7 +10,7 @@ def create_bot():
     connection = get_db()
 
     botname = request.args.get("botName")
-    description = request.args.get("description")
+    description = requ1est.args.get("description")
     cannonicalCode = request.args.get("canonicalCode")
 
     connection.execute("INSERT INTO bots (botname, description, canonical) VALUES (?,?, ?)", 

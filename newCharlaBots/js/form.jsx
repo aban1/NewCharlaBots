@@ -32,7 +32,8 @@ class Form extends React.Component {
 
 
   //handles selection to chat with a bot
-  chatWithBot(selection){
+  //action: chat1 -> chat with 1 bot, chat2 -> chat with 2 bots
+   chatWithBot(selection){
       const url = '/getAllBotNames/';
       fetch(url, {})
         .then(response => response.json())
@@ -141,7 +142,6 @@ class Form extends React.Component {
     // console.log(selection)
     // console.log("action item")
     // console.log(this.state.action)
-    // alert(selection)
     
     if (selection == "button0" || selection == "button3"){
       this.chatWithBot(selection);
@@ -177,6 +177,10 @@ class Form extends React.Component {
     else if (this.state.action.startsWith("createBot")){
       //figure out what language we just clicked
       window.location.replace("/create?" + "langid="+ selection.slice(-1));
+    }
+    else if (this.state.action.startsWith("chat1")){
+      //figure out what language we just clicked
+      window.location.replace("/chat?" + "botid="+ selection.slice(-1));
     }
 }
 

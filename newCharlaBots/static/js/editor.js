@@ -1,4 +1,5 @@
 var isEditor = false;
+  
 $(document).ready(function () {
 
     //get end of url to see what bot id we are looking for            
@@ -146,9 +147,24 @@ function updateCanonicalCode(canonicalCode){
     }
 }
 
+//event listeners
+document.getElementById('canonical').addEventListener('keydown', function(e) {
+    if (e.key == 'Tab') {
+      e.preventDefault();
+      var start = this.selectionStart;
+      var end = this.selectionEnd;
+  
+      // set textarea value to: text before caret + tab + text after caret
+      this.value = this.value.substring(0, start) +
+        "    " + this.value.substring(end);
+  
+      // put caret at right position again
+      this.selectionStart =
+        this.selectionEnd = start + 4;
+    }
+  });
 
-//NEXT STEPS: create bot
-//todo:
+  //todo:
     //add comments to code starting with "#"
     //put the languages in so mark is not dissapointed
     //start error checking:
