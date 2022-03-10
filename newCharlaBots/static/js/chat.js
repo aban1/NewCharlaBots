@@ -17,12 +17,12 @@ function getBlocks(lines){
 
     for (let i = 0; i < lines.length; i++){
         let line = lines[i];
-        blockString +=line;
+        console.log(line);
+        if (line[0] == "#") continue;
 
+        let keyword = "";
         for (let j = 0; j < line.length; j++){
 
-            let keyword = "";
-            //within keyword block
             if (line[j] == "{"){
                 j++;
                 for (; j< line.length; j++){
@@ -31,19 +31,22 @@ function getBlocks(lines){
                     }
                     else{ break;}
                 }
-                if (keyword.startsWith("end")){
-                    console.log("starts with end!!!!!")
-                    blocks.push(blockString);
-                    blockString = "";
-                }
             }
+
             if (line[j] == "#"){
-
+                line = line.slice(0,j-1);
+                break;
             }
-
-        
-            keyword = "";
+            // keyword = "";
         }
+        blockString +=line;
+
+        if (keyword.startsWith("end")){
+            isEnd = true;
+            blocks.push(blockString);
+            blockString = "";
+        }
+
     }
 
     return blocks;
