@@ -28,6 +28,8 @@ $(document).ready(function () {
         let description = data.botInfo["description"];
         document.getElementById("description").value = description;
 
+        //when console.logging canonical, it does not include the #comments even though it was saved with it
+        console.log(canonical);
         let translatedCode = translateCanonicalCode(mappings, canonical);
         document.getElementById("canonical").value = translatedCode;
     })
@@ -75,7 +77,7 @@ function translateLineToUser(mapping, line){
 function translateCanonicalCode(mapping, canonicalCode){
     let translatedCode = "";
     let linesToTranslate = canonicalCode.split("////");
-
+    console.log(linesToTranslate);
     for (let i = 0; i < linesToTranslate.length; i++){//loops thru each line of code
         let translatedLine = translateLineToUser(mapping, linesToTranslate[i]);
         translatedCode += translatedLine +"\n";
@@ -135,7 +137,7 @@ function updateCanonicalCode(canonicalCode){
     
     let botName = document.getElementById("botname").value.toString().trim();
     let description = document.getElementById("description").value;
-
+    // alert(canonicalCode);
     if (isEditor){
         let botID = document.getElementById("botid").innerHTML.toString().trim();    
         let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;

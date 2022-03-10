@@ -10,11 +10,13 @@ $(document).ready(function () {
     })    
 });
 
+//todo: not sure if this works anymore
+//can't test without saving with comment functionality working
 function getBlocks(lines){
     lines = lines.split("////");
     let blocks = [];
     let blockString = "";
-
+    console.log(lines);
     for (let i = 0; i < lines.length; i++){
         let line = lines[i];
         console.log(line);
