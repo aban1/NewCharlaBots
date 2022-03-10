@@ -14,34 +14,38 @@ function getBlocks(lines){
     lines = lines.split("////");
     let blocks = [];
     let blockString = "";
+
     for (let i = 0; i < lines.length; i++){
         let line = lines[i];
         blockString +=line;
 
-
         for (let j = 0; j < line.length; j++){
-            let keyword = "";
 
+            let keyword = "";
+            //within keyword block
             if (line[j] == "{"){
                 j++;
-
                 for (; j< line.length; j++){
-                    if (lines[j] != "}"){
-                        keyword +=lines[j];
+                    if (line[j] != "}"){
+                        keyword +=line[j];
                     }
                     else{ break;}
                 }
+                if (keyword.startsWith("end")){
+                    console.log("starts with end!!!!!")
+                    blocks.push(blockString);
+                    blockString = "";
+                }
+            }
+            if (line[j] == "#"){
+
             }
 
-            console.log(keyword);
-            if (keyword.startsWith("end")){
-                console.log("starts with end!!!!!")
-                blocks.append(blockString);
-                blockString = "";
-            }
+        
+            keyword = "";
         }
     }
-    console.log(blocks);
+
     return blocks;
 }
 
