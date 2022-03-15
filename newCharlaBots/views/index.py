@@ -36,6 +36,7 @@ def show_chat():
     """Display / route."""
 
     botid = flask.request.args.get('botid')
+
     context = { "botid" : botid }
 
     return flask.render_template("chat.html", **context)

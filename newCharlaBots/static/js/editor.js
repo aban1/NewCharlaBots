@@ -1,5 +1,5 @@
 var isEditor = false;
-  
+const newline = "fasldkjfnads";
 $(document).ready(function () {
 
     //get end of url to see what bot id we are looking for            
@@ -76,7 +76,7 @@ function translateLineToUser(mapping, line){
 //translates canonical code to user code
 function translateCanonicalCode(mapping, canonicalCode){
     let translatedCode = "";
-    let linesToTranslate = canonicalCode.split("////");
+    let linesToTranslate = canonicalCode.split(newline);
     console.log(linesToTranslate);
     for (let i = 0; i < linesToTranslate.length; i++){//loops thru each line of code
         let translatedLine = translateLineToUser(mapping, linesToTranslate[i]);
@@ -119,16 +119,31 @@ function saveBot(){
 function translateLineToCanonical(mapping, line){
     let mappingKeys = ["ifAny", "languageid", "andNotAny", "ifAll", "andNotAll", 
         "replyLine", "startReply", "endReply", "endIf", "pickRandom", "endPick"]
-
+    let notKeys = ["andNotAny", "andNotAll"]
     //check if line starts with any of the keywords
+    let canonical_str = "";
     for (let i = 0; i< mappingKeys.length; i++){
         if (line.startsWith(mapping[mappingKeys[i]])){
 
             let lastWords = line.slice(mapping[mappingKeys[i]].length);
-            let canonical_str = "{" + mappingKeys[i] + "}" + lastWords + "////";
-            return canonical_str;
+            canonical_str = "{" + mappingKeys[i] + "}" + lastWords + newline;
+            break;
         }
     }
+
+    //todo: fix this
+    for (let i = 0; i< notKeys.length; i++){
+        let index = line.includes(mapping[notKeys[i]]);
+        if (line.includes(mapping[notKeys[i]])){
+            let before = line.slice(0, index - 1);
+            let key = notKeys[i];
+            let after = line.slice(index + key.length);
+            canonical_str = before + "{" + key + "}" + after;
+            break;
+        }
+    }
+
+
     return line;
 }
 
@@ -137,7 +152,7 @@ function updateCanonicalCode(canonicalCode){
     
     let botName = document.getElementById("botname").value.toString().trim();
     let description = document.getElementById("description").value;
-    // alert(canonicalCode);
+    alert(canonicalCode);
     if (isEditor){
         let botID = document.getElementById("botid").innerHTML.toString().trim();    
         let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
