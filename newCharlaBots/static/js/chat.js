@@ -12,7 +12,7 @@ $(document).ready(function () {
     })    
 });
 
-//can't test without saving with comment functionality working
+//inputs lines of canonical code, returns canonical code as array of 'blocks'
 function getBlocks(lines){
     lines = lines.split(newline);
     let blocks = [];
@@ -39,7 +39,7 @@ function getBlocks(lines){
                 break;
             }
         }
-        blockString +=line + " ";
+        blockString += line + " ";
 
         if (keyword.startsWith("end")){
             isEnd = true;
@@ -47,19 +47,27 @@ function getBlocks(lines){
             blockString = "";
         }
     }    
-    console.log(blocks);
     return blocks;
 }
 
+//returns the keyword if found, false if not
 function checkForKeyword(word){
     if (word[0] != "{" || word[word.length - 1] != "}") return false;
     else return word.slice(1,-1)
 }
 
+function removeComma(word){
+    if (word[word.length] == ","){
+        word = word.slice(0,1);
+    }
+    return word;
+}
+
+//TODO: deal with pick randoms 
+//input: array of 'blocks' of canonical code
+//returns: array of dictionary of rules
 function createCanonicalArray(blocks){
     let interpretedCode = [];
-    
-    //one block no new lines
     for (let i = 0; i < blocks.length; i++){
         let rulesDict = {
             "keyword" : "",
@@ -70,59 +78,48 @@ function createCanonicalArray(blocks){
         };
         let words = blocks[i].split(" ");
         let keyword = checkForKeyword(words[0]);
+        //error checking
         if (keyword == false){
-            console.log("error no keyword at start")
+            alert("ERROR: no keyword at start, check code for assistance")
             return;
         }
-        //gets the first keyword as keyword
         else{
-            rulesDict["keyword"] = keyword;
+            rulesDict["keyword"] = keyword;  //gets the first keyword as keyword
         }
-        let j = 1;
-        let word = "";
-        for (; j < words.length; j++){
+
+        let endloop = false;
+        for (let j = 1 ; j < words.length; j++){
+            if (endloop == true){ break; }
             //while it's not a keyword, add word to "words"
             if (!checkForKeyword(words[j])){
-                word = words[j];
-                if (words[j][words[j].length-1] == ","){
-                    word = words[j].slice(0,-1);
-                }
-                console.log(words[j])
-                
-                // if (words[j] == "{replyLine}"){
-                //     console.log("inside reply line")
-                //     console.log(checkForKeyword(words[j]))
-                // }
-
-                rulesDict["words"].push(word);
+                rulesDict["words"].push(removeComma(words[j]));
             }
             //it is a NOT keyword
             else if (checkForKeyword(words[j]).startsWith("and")){
                 rulesDict["keywordNOT"] = checkForKeyword(words[j]);
-                for (; j<words.length; j++){
-                    let notWords = checkForKeyword(words[j]);
-                    //if its a comma chop it off, 
-                    if (!notWords){
-                        rulesDict["wordsNOT"].push(words[j].slice(0,-1));
+                //loop through the not keywords
+                for (j = j + 1; j<words.length; j++){
+                    //if it IS a keyword, we are at the response, end the loop
+                    if (!checkForKeyword(words[j])){                    
+                        rulesDict["wordsNOT"].push(removeComma(words[j]));
+                    }
+                    else{ 
+                        endloop = true;
+                        break;
                     }
                 }
-                break;
             }
             else{ break; }
         }
-        //everything else should be the response
+        //all other code except for end statements are the response
         let responseStr = "";
-        j++;
         for (; j < words.length - 1; j++){
             if (words[j].startsWith("{")) break;
             responseStr += words[j] + " ";
         }
-        console.log(responseStr);
-        console.log(rulesDict["response"])
         rulesDict["response"].push(responseStr);
         interpretedCode.push(rulesDict);
     }
-    console.log(interpretedCode);
     return interpretedCode;
 }
 
@@ -130,14 +127,12 @@ function sendMessage(){
     //fetch canonical code
     let botID = document.getElementById("botid").innerHTML;
     let url = "/getBotData/?botid=" + (botID).toString().trim();
-        //put canonical code into array of dictionaries which include lists
+
     fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
         let canonicalCode = data.data["canonical"];
-
         let blocks = getBlocks(canonicalCode);
-
         let canonicalArray = createCanonicalArray(blocks);    
     })    
 
