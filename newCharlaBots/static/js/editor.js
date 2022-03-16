@@ -131,13 +131,12 @@ function translateLineToCanonical(mapping, line){
         }
     }
 
-    //todo: fix this
     for (let i = 0; i< notKeys.length; i++){
-        let index = canonical_str.includes(mapping[notKeys[i]]);
-        if (line.includes(mapping[notKeys[i]])){
+        let index = canonical_str.indexOf(mapping[notKeys[i]]);
+        if (index != -1){
             let before = canonical_str.slice(0, index - 1);
             let key = notKeys[i];
-            let after = canonical_str.slice(index + key.length);
+            let after = canonical_str.slice(index + mapping[notKeys[i]].length, -1);
             canonical_str = before + "{" + key + "}" + after;
             break;
         }
