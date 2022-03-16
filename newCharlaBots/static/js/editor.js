@@ -28,8 +28,6 @@ $(document).ready(function () {
         let description = data.botInfo["description"];
         document.getElementById("description").value = description;
 
-        //when console.logging canonical, it does not include the #comments even though it was saved with it
-        console.log(canonical);
         let translatedCode = translateCanonicalCode(mappings, canonical);
         document.getElementById("canonical").value = translatedCode;
     })
@@ -39,7 +37,6 @@ $(document).ready(function () {
 //translates canonical to user code
 function translateLineToUser(mapping, line){
     let translatedLine = "";
-    console.log(line);
     for (j = 0; j < line.length; j++){
         let keyword = "";
 
@@ -55,7 +52,7 @@ function translateLineToUser(mapping, line){
             
             //if it does not start w "and", if, end, add 4 spaces
             if (!(keyword.startsWith("and") || keyword.startsWith("if") ||
-                keyword.startsWith("end"))){
+                keyword.startsWith("end")) || keyword == "pickRandom"){
                 translatedLine += "    " + translatedKeyword;
             }
             else{
@@ -77,7 +74,6 @@ function translateLineToUser(mapping, line){
 function translateCanonicalCode(mapping, canonicalCode){
     let translatedCode = "";
     let linesToTranslate = canonicalCode.split(newline);
-    console.log(linesToTranslate);
     for (let i = 0; i < linesToTranslate.length; i++){//loops thru each line of code
         let translatedLine = translateLineToUser(mapping, linesToTranslate[i]);
         translatedCode += translatedLine +"\n";
@@ -91,8 +87,6 @@ function translateCanonicalCode(mapping, canonicalCode){
 function saveBot(){
     
     let langID = document.getElementById("langid").innerHTML;
-
-    console.log(langID)
     
     let url = "/getLanguageData/?langid=" + (langID).trim();
     fetch(url, {})
@@ -165,7 +159,7 @@ function updateCanonicalCode(canonicalCode){
     }
 }
 
-//event listeners
+//event listener for tabbing within textarea
 document.getElementById('canonical').addEventListener('keydown', function(e) {
     if (e.key == 'Tab') {
       e.preventDefault();

@@ -13,8 +13,12 @@ $(document).ready(function () {
 });
 
 //inputs lines of canonical code, returns canonical code as array of 'blocks'
+//deal with pickRandom code differently to differentiate between the different options
+//  for pickRadom, do not delete the newlines chars from canonical code
+//TODO: deal with pickRandom
 function getBlocks(lines){
     lines = lines.split(newline);
+    let linesCopy = lines;
     let blocks = [];
     let blockString = "";
 
@@ -22,27 +26,34 @@ function getBlocks(lines){
         let line = lines[i];
 
         let keyword = "";
+        let pickRandomBlock = false;
+
         for (let j = 0; j < line.length; j++){
 
             if (line[j] == "{"){
                 j++;
-                for (; j< line.length; j++){
-                    if (line[j] != "}"){
-                        keyword +=line[j];
-                    }
-                    else{ break;}
+                while (line[j] != "}" && j < line.length){
+                    keyword +=line[j];
+                    j++;
+                }
+                if (keyword == "pickRandom"){
+                    pickRandomBlock = true;
                 }
             }
 
-            if (j < line.length-1 && line[j] && line[j+1] == "/"){
+            //ignore comments
+            if (j < line.length-1 && line[j] == "/" && line[j+1] == "/"){
                 line = line.slice(0,j-1);
                 break;
             }
         }
-        blockString += line + " ";
-
+        if (pickRandomBlock){
+            blockString += line + newline;
+        }
+        else{ 
+            blockString += line + " ";
+        }
         if (keyword.startsWith("end")){
-            isEnd = true;
             blocks.push(blockString);
             blockString = "";
         }
@@ -63,6 +74,18 @@ function removeComma(word){
     return word;
 }
 
+//not tested
+function createDictForPickRandom(block){
+    let rulesDict = {
+        "keyword" : "",
+        "words" : [],
+        "keywordNOT": "",
+        "wordsNOT": [],
+        "response" : []
+    };
+    rulesDict.push("pickRandom");
+
+}
 //TODO: deal with pick randoms 
 //input: array of 'blocks' of canonical code
 //returns: array of dictionary of rules
@@ -83,6 +106,10 @@ function createCanonicalArray(blocks){
             alert("ERROR: no keyword at start, check code for assistance")
             return;
         }
+        // else if (keyword == "pickRandom"){
+        //     interpretedCode.push(createDictForPickRandom(blocks[i]));
+        //     continue;
+        // }
         else{
             rulesDict["keyword"] = keyword;  //gets the first keyword as keyword
         }
