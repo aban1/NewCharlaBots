@@ -9,6 +9,8 @@ venv3/
 .venv/
 .pytest_cache
 
+*.sqlite3
+
 
 
 # JavaScript

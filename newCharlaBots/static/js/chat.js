@@ -1,4 +1,4 @@
-const newline = "fasldkjfnads";
+const newline = "(nw-ln)";;
 const comment = "//"
 $(document).ready(function () {
     let botID = document.getElementById("botid").innerHTML;

@@ -1,5 +1,5 @@
 var isEditor = false;
-const newline = "fasldkjfnads";
+const newline = "(nw-ln)";
 $(document).ready(function () {
 
     //get end of url to see what bot id we are looking for            
@@ -108,6 +108,9 @@ function saveBot(){
             let line = translatedLines[i].trim();
             line = translateLineToCanonical(mappings, line);
             canonicalCode += line;
+            if (i != translatedLines.length-1){
+                canonicalCode += newline;
+            }
         }
         //send the updated code back to database
         updateCanonicalCode(canonicalCode);
@@ -126,7 +129,7 @@ function translateLineToCanonical(mapping, line){
         if (line.startsWith(mapping[mappingKeys[i]])){
 
             let lastWords = line.slice(mapping[mappingKeys[i]].length);
-            canonical_str = "{" + mappingKeys[i] + "}" + lastWords + newline;
+            canonical_str = "{" + mappingKeys[i] + "}" + lastWords;
             break;
         }
     }
@@ -134,9 +137,9 @@ function translateLineToCanonical(mapping, line){
     for (let i = 0; i< notKeys.length; i++){
         let index = canonical_str.indexOf(mapping[notKeys[i]]);
         if (index != -1){
-            let before = canonical_str.slice(0, index - 1);
+            let before = canonical_str.slice(0, index);
             let key = notKeys[i];
-            let after = canonical_str.slice(index + mapping[notKeys[i]].length, -1);
+            let after = canonical_str.slice(index + mapping[notKeys[i]].length);
             canonical_str = before + "{" + key + "}" + after;
             break;
         }
@@ -145,7 +148,7 @@ function translateLineToCanonical(mapping, line){
     return canonical_str;
 }
 
-//sends updated code,description and values back to db
+//sends updated code, description and values back to db
 function updateCanonicalCode(canonicalCode){
     
     let botName = document.getElementById("botname").value.toString().trim();
@@ -179,9 +182,7 @@ document.getElementById('canonical').addEventListener('keydown', function(e) {
     }
   });
 
-  //todo:
-    //add comments to code starting with "#"
-    //put the languages in so mark is not dissapointed
+    //put the languages in
     //start error checking:
         //includes spelling errors, forgot end match...
 //be able to chat with a bot
