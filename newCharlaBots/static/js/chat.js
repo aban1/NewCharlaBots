@@ -89,10 +89,10 @@ function createCanonicalArray(blocks){
                 }
                 console.log(words[j])
                 
-                if (words[j] == "{replyLine}"){
-                    console.log("inside reply line")
-                    console.log(checkForKeyword(words[j]))
-                }
+                // if (words[j] == "{replyLine}"){
+                //     console.log("inside reply line")
+                //     console.log(checkForKeyword(words[j]))
+                // }
 
                 rulesDict["words"].push(word);
             }
