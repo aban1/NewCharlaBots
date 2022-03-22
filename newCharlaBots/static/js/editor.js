@@ -37,8 +37,12 @@ $(document).ready(function () {
 //translates canonical to user code
 function translateLineToUser(mapping, line){
     let translatedLine = "";
+    let prevKeyword = "";
+    let keyword = "";
+
     for (j = 0; j < line.length; j++){
-        let keyword = "";
+        prevKeyword = keyword;
+        keyword = "";
 
         if (line[j] == "{"){
             j++;
@@ -52,19 +56,22 @@ function translateLineToUser(mapping, line){
             
             //if it does not start w "and", if, end, add 4 spaces
             if (!(keyword.startsWith("and") || keyword.startsWith("if") ||
-                keyword.startsWith("end")) || keyword == "pickRandom"){
+                keyword.startsWith("end") || keyword == "pickRandom")){
                 translatedLine += "    " + translatedKeyword;
             }
             else{
                 translatedLine += translatedKeyword;
             }
-            if (translatedKeyword.startsWith("end")){
-                translatedLine += "\n";
-            }
         }
         //not a keyword
-        else{
-            translatedLine += line[j];
+        else {
+            if (!(prevKeyword.startsWith("if") || (prevKeyword.startsWith("reply")))){
+                translatedLine += "    ";
+            }
+            while (j < line.length){
+                translatedLine += String(line[j]);
+                j++;
+            }
         }
     }
     return translatedLine;
@@ -114,7 +121,7 @@ function saveBot(){
 
 //translate a line from user language to canonical code
 function translateLineToCanonical(mapping, line){
-    let mappingKeys = ["ifAny", "languageid", "andNotAny", "ifAll", "andNotAll", 
+    let mappingKeys = ["ifAny", "andNotAny", "ifAll", "andNotAll", 
         "replyLine", "startReply", "endReply", "endIf", "pickRandom", "endPick"]
     let notKeys = ["andNotAny", "andNotAll"]
     //check if line starts with any of the keywords
@@ -138,7 +145,7 @@ function translateLineToCanonical(mapping, line){
             break;
         }
     }
-
+    if (canonical_str == ""){ return line; }
     return canonical_str;
 }
 
