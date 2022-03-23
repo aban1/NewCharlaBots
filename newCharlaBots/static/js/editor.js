@@ -23,6 +23,7 @@ $(document).ready(function () {
         document.getElementById("botname").value = data.botInfo["botname"];
         
         let canonical = data.botInfo["canonical"];
+
         let mappings = data.langInfo;
         
         let description = data.botInfo["description"];
@@ -115,7 +116,6 @@ function saveBot(){
         }
         //send the updated code back to database
         updateCanonicalCode(canonicalCode);
-
     })
 }
 
@@ -187,5 +187,4 @@ document.getElementById('canonical').addEventListener('keydown', function(e) {
     //start error checking:
         //includes spelling errors, forgot end match...
 //be able to chat with a bot
-//edge case: i.e. if not happy and not sad
 //TODO: version history 

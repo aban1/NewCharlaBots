@@ -12,6 +12,17 @@ $(document).ready(function () {
     })    
 });
 
+//blocks is an array of strings. remove empty elements from array
+function blocksHelper(blocks){
+    let ret = [];
+    for (let i = 0; i< blocks.length; i++){
+        if (blocks[i] != ""){
+            ret.push(blocks[i].trim());
+        }
+    }
+    return ret;
+}
+
 //inputs lines of canonical code, returns canonical code as array of 'blocks'
 //deal with pickRandom code differently to differentiate between the different options
 //  for pickRadom, do not delete the newlines chars from canonical code
@@ -57,8 +68,9 @@ function getBlocks(lines){
             blocks.push(blockString);
             blockString = "";
         }
-    }    
-    return blocks;
+    }
+
+    return blocksHelper(blocks);
 }
 
 //returns the keyword if found, false if not
@@ -89,6 +101,7 @@ function createDictForPickRandom(block){
 //TODO: deal with pick randoms 
 //input: array of 'blocks' of canonical code
 //returns: array of dictionary of rules
+//TODO: bug: reply line not getting interpretted
 function createCanonicalArray(blocks){
     let interpretedCode = [];
     for (let i = 0; i < blocks.length; i++){
@@ -115,7 +128,8 @@ function createCanonicalArray(blocks){
         }
 
         let endloop = false;
-        for (let j = 1 ; j < words.length; j++){
+        let j = 1;
+        for (; j < words.length; j++){
             if (endloop == true){ break; }
             //while it's not a keyword, add word to "words"
             if (!checkForKeyword(words[j])){
@@ -140,14 +154,49 @@ function createCanonicalArray(blocks){
         }
         //all other code except for end statements are the response
         let responseStr = "";
+
         for (; j < words.length - 1; j++){
-            if (words[j].startsWith("{")) break;
+            if (words[j].startsWith("{")) continue;
             responseStr += words[j] + " ";
         }
         rulesDict["response"].push(responseStr);
         interpretedCode.push(rulesDict);
     }
+    
     return interpretedCode;
+
+}
+
+
+function chat_notAny();
+
+function chat_notAll();
+
+function chat_ifAny(interpretedCode, input){
+    //if any of the input matches and of the words,
+    // if the not words 
+}
+function chat_ifAll(interpretedCode, input){
+
+}
+function chat_pickRandom(interpretedCode, input);
+//interpretedCode = rules dict mapping what we should say
+function chat(interpretedCode, input){
+    //depending on what interpretedCode.keyword is, we call different functions
+    let response = "";
+    switch(interpretedCode.keyword){
+        case "ifAny":
+            response = chat_ifAny(interpretedCode, input);
+            if (response != ""){
+                return response;
+            };
+            break;
+        case "ifAll":
+            return chat_ifAll(interpretedCode, input);
+        case "pickRandom":
+            return chat_pickRandom(interpretedCode, input);
+    }
+
 }
 
 function sendMessage(){
@@ -160,7 +209,15 @@ function sendMessage(){
         .then((data) =>{
         let canonicalCode = data.data["canonical"];
         let blocks = getBlocks(canonicalCode);
-        let canonicalArray = createCanonicalArray(blocks);    
+        let canonicalArray = createCanonicalArray(blocks);
+        let i = 1;
+        console.log(canonicalArray);
+        for (let i = 0; i < canonicalArray.length; i++){
+            let response = chat(canonicalArray[i]);
+            if(response != ""){
+                break;
+            }
+        }
     })    
 
 }
