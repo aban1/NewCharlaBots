@@ -37,9 +37,7 @@ $(document).ready(function () {
 
 //translates canonical to user code
 function translateLineToUser(mapping, line){
-    let translatedLine = "";
-    let prevKeyword = "";
-    let keyword = "";
+    let translatedLine = "", prevKeyword = "", keyword = "";
 
     for (j = 0; j < line.length; j++){
         prevKeyword = keyword;
@@ -55,9 +53,7 @@ function translateLineToUser(mapping, line){
             }
             let translatedKeyword = mapping[keyword].trim();
             
-            //if it does not start w "and", if, end, add 4 spaces
-            if (!(keyword.startsWith("and") || keyword.startsWith("if") ||
-                keyword.startsWith("end") || keyword == "pickRandom")){
+            if (keyword.startsWith("reply")){
                 translatedLine += "    " + translatedKeyword;
             }
             else{
@@ -66,13 +62,14 @@ function translateLineToUser(mapping, line){
         }
         //not a keyword
         else {
-            if (!(prevKeyword.startsWith("if") || (prevKeyword.startsWith("reply")))){
+            if (!(prevKeyword.startsWith("if") || prevKeyword.startsWith("reply") || prevKeyword.startsWith("and"))){
                 translatedLine += "    ";
             }
-            while (j < line.length){
+            while (j < line.length && line[j] != "{"){
                 translatedLine += String(line[j]);
                 j++;
             }
+            j--;
         }
     }
     return translatedLine;

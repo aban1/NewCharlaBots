@@ -168,29 +168,66 @@ function createCanonicalArray(blocks){
 }
 
 
-function chat_notAny();
+//returns true if arr contains ALL elements of target
+//arr is the words in the input
+//target is the words in dict
+function contains_all(arr, target) {
+    return (arr, target) => target.every(v => arr.includes(v));
+}
 
-function chat_notAll();
+//if the input has any of the NOT words, return true
+//else return false
+function chat_notAny(interpretedCode, input){
+    inputArr = input.split(" ");
+
+    for (let i = 0; i < interpretedCode.wordsNOT.length; i++){
+        if (inputArr.includes(interpretedCode.wordsNOT[i])) return true;
+    }
+    
+    return false;
+}
+
+//if the input has all of the NOT words, return true
+//else return false
+function chat_notAll(interpretedCode, input){
+    inputArr = input.split(" ");
+    return contains_all(inputArr, interpretedCode.wordsNOT);
+}
 
 function chat_ifAny(interpretedCode, input){
-    //if any of the input matches and of the words,
-    // if the not words 
+    for (let i = 0; i < interpretedCode.words.length; i++){
+        if (input.includes(interpretedCode.words[i])){
+            if ((interpretedCode.keywordNOT == "andNotAny" && (chat_notAny(interpretedCode, input))) ||
+                (interpretedCode.keywordNOT == "andNotAll" && chat_notAll(interpretedCode, input))){
+                return "";//don't respond yet 
+            }
+        }    
+    }
+    return interpretedCode.response;
 }
-function chat_ifAll(interpretedCode, input){
 
+function chat_ifAll(interpretedCode, input){
+    inputArr = input.split(" ");
+    if (contains_all(inputArr, interpretedCode.words)){
+        if ((interpretedCode.keywordNOT == "andNotAny" && (chat_notAny(interpretedCode, input)))||
+            (interpretedCode.keywordNOT == "andNotAll" && chat_notAll(interpretedCode, input))){
+            return "";//don't respond yet 
+        }
+    }
+    return interpretedCode.response;
 }
-function chat_pickRandom(interpretedCode, input);
+
+function chat_pickRandom(interpretedCode, input){
+    return;
+}
+
 //interpretedCode = rules dict mapping what we should say
 function chat(interpretedCode, input){
     //depending on what interpretedCode.keyword is, we call different functions
     let response = "";
     switch(interpretedCode.keyword){
         case "ifAny":
-            response = chat_ifAny(interpretedCode, input);
-            if (response != ""){
-                return response;
-            };
-            break;
+            return chat_ifAny(interpretedCode, input);
         case "ifAll":
             return chat_ifAll(interpretedCode, input);
         case "pickRandom":
@@ -210,14 +247,19 @@ function sendMessage(){
         let canonicalCode = data.data["canonical"];
         let blocks = getBlocks(canonicalCode);
         let canonicalArray = createCanonicalArray(blocks);
-        let i = 1;
+        // let i = 1;
         console.log(canonicalArray);
+        let response = "";
         for (let i = 0; i < canonicalArray.length; i++){
-            let response = chat(canonicalArray[i]);
+            //take grammar out of input
+            let input = document.getElementById("input").value;
+            console.log(input);
+            response = chat(canonicalArray[i], input);
             if(response != ""){
                 break;
             }
         }
+        console.log(response);
     })    
 
 }
