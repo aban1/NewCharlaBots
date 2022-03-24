@@ -81,7 +81,10 @@ function translateCanonicalCode(mapping, canonicalCode){
     let linesToTranslate = canonicalCode.split(newline);
     for (let i = 0; i < linesToTranslate.length; i++){//loops thru each line of code
         let translatedLine = translateLineToUser(mapping, linesToTranslate[i]);
-        translatedCode += translatedLine +"\n";
+        translatedCode += translatedLine;
+        if (i < linesToTranslate.length-1){
+            translatedCode += "\n";
+        }
     }
     return translatedCode;
 }
