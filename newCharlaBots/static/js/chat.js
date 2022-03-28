@@ -98,7 +98,8 @@ function createDictForPickRandom(block){
     rulesDict.push("pickRandom");
 
 }
-//TODO: deal with pick randoms 
+//TODO: deal with pick randoms
+//TODO: long responses
 //input: array of 'blocks' of canonical code
 //returns: array of dictionary of rules
 //TODO: bug: reply line not getting interpretted
@@ -171,8 +172,11 @@ function createCanonicalArray(blocks){
 //returns true if arr contains ALL elements of target
 //arr is the words in the input
 //target is the words in dict
-function contains_all(arr, target) {
-    return (arr, target) => target.every(v => arr.includes(v));
+function contains_all(inputWords, listWords) {
+    for (let i = 0; i < listWords.length; i++){
+        if (!inputWords.includes(listWords[i])) return false;
+    }
+    return true;    
 }
 
 //if the input has any of the NOT words, return true
@@ -201,20 +205,25 @@ function chat_ifAny(interpretedCode, input){
                 (interpretedCode.keywordNOT == "andNotAll" && chat_notAll(interpretedCode, input))){
                 return "";//don't respond yet 
             }
+            else {return interpretedCode.response;}
         }    
     }
-    return interpretedCode.response;
+    return "";
 }
 
 function chat_ifAll(interpretedCode, input){
     inputArr = input.split(" ");
     if (contains_all(inputArr, interpretedCode.words)){
-        if ((interpretedCode.keywordNOT == "andNotAny" && (chat_notAny(interpretedCode, input)))||
+        //we have a NOT word, dont respond
+        if ((interpretedCode.keywordNOT == "andNotAny" && chat_notAny(interpretedCode, input))||
             (interpretedCode.keywordNOT == "andNotAll" && chat_notAll(interpretedCode, input))){
             return "";//don't respond yet 
         }
+        else{ 
+            return interpretedCode.response;
+        }
     }
-    return interpretedCode.response;
+    return "";
 }
 
 function chat_pickRandom(interpretedCode, input){
@@ -232,6 +241,8 @@ function chat(interpretedCode, input){
             return chat_ifAll(interpretedCode, input);
         case "pickRandom":
             return chat_pickRandom(interpretedCode, input);
+        default:
+            return "";
     }
 
 }
@@ -247,11 +258,13 @@ function sendMessage(){
         let canonicalCode = data.data["canonical"];
         let blocks = getBlocks(canonicalCode);
         let canonicalArray = createCanonicalArray(blocks);
+        
         // let i = 1;
         console.log(canonicalArray);
         let response = "";
         for (let i = 0; i < canonicalArray.length; i++){
             //take grammar out of input
+            response = "";
             let input = document.getElementById("input").value;
             console.log(input);
             response = chat(canonicalArray[i], input);
@@ -263,3 +276,5 @@ function sendMessage(){
     })    
 
 }
+
+//l
