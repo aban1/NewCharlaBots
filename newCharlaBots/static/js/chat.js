@@ -75,15 +75,18 @@ function getBlocks(lines){
 
 //returns the keyword if found, false if not
 function checkForKeyword(word){
+
     if (word[0] != "{" || word[word.length - 1] != "}") return false;
     else return word.slice(1,-1)
+
 }
 
+//we can also too lower it
 function removeComma(word){
     if (word[word.length] == ","){
         word = word.slice(0,1);
     }
-    return word;
+    return word.toLowerCase();
 }
 
 //not tested
@@ -95,7 +98,9 @@ function createDictForPickRandom(block){
         "wordsNOT": [],
         "response" : []
     };
-    rulesDict.push("pickRandom");
+    rulesDict["keyword"] ="pickRandom";
+    //shove everything else into response
+
 
 }
 //TODO: deal with pick randoms
@@ -114,16 +119,24 @@ function createCanonicalArray(blocks){
             "response" : []
         };
         let words = blocks[i].split(" ");
+        //for every word remove capitalization and grammar
+        for(let i = 0; i < words.length; i++){
+            words[i] = words[i].toLowerCase(); 
+            words[i] = words[i].replace(/[.,\/#!$%\^&\*;:=\-_`~()]/g,"")
+        }
+
         let keyword = checkForKeyword(words[0]);
         //error checking
         if (keyword == false){
+            
             alert("ERROR: no keyword at start, check code for assistance")
+
             return;
         }
-        // else if (keyword == "pickRandom"){
-        //     interpretedCode.push(createDictForPickRandom(blocks[i]));
-        //     continue;
-        // }
+        else if (keyword == "pickrandom"){
+            interpretedCode.push(createDictForPickRandom(blocks[i]));
+            continue;
+        }
         else{
             rulesDict["keyword"] = keyword;  //gets the first keyword as keyword
         }
@@ -201,8 +214,8 @@ function chat_notAll(interpretedCode, input){
 function chat_ifAny(interpretedCode, input){
     for (let i = 0; i < interpretedCode.words.length; i++){
         if (input.includes(interpretedCode.words[i])){
-            if ((interpretedCode.keywordNOT == "andNotAny" && (chat_notAny(interpretedCode, input))) ||
-                (interpretedCode.keywordNOT == "andNotAll" && chat_notAll(interpretedCode, input))){
+            if ((interpretedCode.keywordNOT == "andnotany" && (chat_notAny(interpretedCode, input))) ||
+                (interpretedCode.keywordNOT == "andnotall" && chat_notAll(interpretedCode, input))){
                 return "";//don't respond yet 
             }
             else {return interpretedCode.response;}
@@ -215,8 +228,8 @@ function chat_ifAll(interpretedCode, input){
     inputArr = input.split(" ");
     if (contains_all(inputArr, interpretedCode.words)){
         //we have a NOT word, dont respond
-        if ((interpretedCode.keywordNOT == "andNotAny" && chat_notAny(interpretedCode, input))||
-            (interpretedCode.keywordNOT == "andNotAll" && chat_notAll(interpretedCode, input))){
+        if ((interpretedCode.keywordNOT == "andnotany" && chat_notAny(interpretedCode, input))||
+            (interpretedCode.keywordNOT == "andnotall" && chat_notAll(interpretedCode, input))){
             return "";//don't respond yet 
         }
         else{ 
@@ -233,13 +246,14 @@ function chat_pickRandom(interpretedCode, input){
 //interpretedCode = rules dict mapping what we should say
 function chat(interpretedCode, input){
     //depending on what interpretedCode.keyword is, we call different functions
+    input = input.toLowerCase();
     let response = "";
     switch(interpretedCode.keyword){
-        case "ifAny":
+        case "ifany":
             return chat_ifAny(interpretedCode, input);
-        case "ifAll":
+        case "ifall":
             return chat_ifAll(interpretedCode, input);
-        case "pickRandom":
+        case "pickrandom":
             return chat_pickRandom(interpretedCode, input);
         default:
             return "";
@@ -259,11 +273,10 @@ function sendMessage(){
         let blocks = getBlocks(canonicalCode);
         let canonicalArray = createCanonicalArray(blocks);
         
-        // let i = 1;
         console.log(canonicalArray);
         let response = "";
         for (let i = 0; i < canonicalArray.length; i++){
-            //take grammar out of input
+            //todo: take grammar out of input
             response = "";
             let input = document.getElementById("input").value;
             console.log(input);
