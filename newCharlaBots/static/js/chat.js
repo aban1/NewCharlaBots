@@ -29,7 +29,6 @@ function blocksHelper(blocks){
 //TODO: deal with pickRandom
 function getBlocks(lines){
     lines = lines.split(newline);
-    let linesCopy = lines;
     let blocks = [];
     let blockString = "";
 
@@ -38,9 +37,9 @@ function getBlocks(lines){
 
         let keyword = "";
         let pickRandomBlock = false;
+        let startReplyBlock = false;
 
         for (let j = 0; j < line.length; j++){
-
             if (line[j] == "{"){
                 j++;
                 while (line[j] != "}" && j < line.length){
@@ -50,8 +49,10 @@ function getBlocks(lines){
                 if (keyword == "pickRandom"){
                     pickRandomBlock = true;
                 }
+                else if (keyword == "startReply"){
+                    startReplyBlock = true;
+                }
             }
-
             //ignore comments
             if (j < line.length-1 && line[j] == "/" && line[j+1] == "/"){
                 line = line.slice(0,j-1);
@@ -59,7 +60,28 @@ function getBlocks(lines){
             }
         }
         if (pickRandomBlock){
-            blockString += line + newline;
+            //for loop till end
+            while(i < lines.length){
+                blockString += lines[i] + " " + newline;
+                i++;
+            }
+            blocks.push(blockString);
+            //we have to be at the end 
+            return blocksHelper(blocks);
+        }
+        else if (startReplyBlock){
+            blockString += lines[i] + newline + " ";
+            i++;
+            while(i < lines.length){
+                blockString += lines[i] + newline + " " ;
+                i++;
+                if (lines[i] == "{endIf}"){
+                    blockString += lines[i];
+                    blocks.push(blockString);
+                    break;
+                }
+            }
+            blockString = "";
         }
         else{ 
             blockString += line + " ";
@@ -73,12 +95,14 @@ function getBlocks(lines){
     return blocksHelper(blocks);
 }
 
-//returns the keyword if found, false if not
+//returns the keyword if found, false if not, empty string if start/end long response
 function checkForKeyword(word){
-
-    if (word[0] != "{" || word[word.length - 1] != "}") return false;
-    else return word.slice(1,-1)
-
+    if (word[0] == "{" || word[word.length - 1] == "}"){
+        return word.slice(1,-1)
+    }
+    //case where {keyword}(nw-ln)
+    else if (word[0] != "{" || word[word.length - 1] != ")") return "long response";
+    else return false;
 }
 
 //we can also too lower it
@@ -99,7 +123,25 @@ function createDictForPickRandom(block){
         "response" : []
     };
     rulesDict["keyword"] ="pickRandom";
-    //shove everything else into response
+
+    responseArr = block.split(" " + newline);
+    //remove first and last 2 elements of responseArr
+    responseArr.pop();
+    responseArr.pop();
+    responseArr.shift();
+    rulesDict["response"] = responseArr;
+    return rulesDict;
+}
+
+function createDictForLongResponse(blocks){
+    let rulesDict = {
+        "keyword" : "",
+        "words" : [],
+        "keywordNOT": "",
+        "wordsNOT": [],
+        "response" : []
+    };
+    rulesDict["keyword"] ="startReply";
 
 
 }
@@ -121,16 +163,14 @@ function createCanonicalArray(blocks){
         let words = blocks[i].split(" ");
         //for every word remove capitalization and grammar
         for(let i = 0; i < words.length; i++){
-            words[i] = words[i].toLowerCase(); 
-            words[i] = words[i].replace(/[.,\/#!$%\^&\*;:=\-_`~()]/g,"")
+            words[i] = words[i].toLowerCase(); //TODO: should not tolowercase responses, just input words
+            words[i] = words[i].replace(/[.,\/#!$%\^&\*;:=\_`~]/g,"")
         }
 
         let keyword = checkForKeyword(words[0]);
         //error checking
         if (keyword == false){
-            
             alert("ERROR: no keyword at start, check code for assistance")
-
             return;
         }
         else if (keyword == "pickrandom"){
@@ -142,15 +182,16 @@ function createCanonicalArray(blocks){
         }
 
         let endloop = false;
-        let j = 1;
+        let j = 1;//don't delete, j is used outside of the for loop
         for (; j < words.length; j++){
             if (endloop == true){ break; }
             //while it's not a keyword, add word to "words"
-            if (!checkForKeyword(words[j])){
+            let innerKeyword = checkForKeyword(words[j]);
+            if (!innerKeyword){
                 rulesDict["words"].push(removeComma(words[j]));
             }
             //it is a NOT keyword
-            else if (checkForKeyword(words[j]).startsWith("and")){
+            else if (innerKeyword.startsWith("and")){
                 rulesDict["keywordNOT"] = checkForKeyword(words[j]);
                 //loop through the not keywords
                 for (j = j + 1; j<words.length; j++){
@@ -168,9 +209,11 @@ function createCanonicalArray(blocks){
         }
         //all other code except for end statements are the response
         let responseStr = "";
+        //check if theres a start reply
 
         for (; j < words.length - 1; j++){
             if (words[j].startsWith("{")) continue;
+            //if we see {stuff} delete it from words[j] (nw-ln){endif}
             responseStr += words[j] + " ";
         }
         rulesDict["response"].push(responseStr);
@@ -239,22 +282,23 @@ function chat_ifAll(interpretedCode, input){
     return "";
 }
 
-function chat_pickRandom(interpretedCode, input){
-    return;
+function chat_pickRandom(interpretedCode){
+    //see how large response is, pick a random one
+    let idx = Math.floor(Math.random() * interpretedCode.response.length);
+    return interpretedCode.response[idx];
 }
 
 //interpretedCode = rules dict mapping what we should say
 function chat(interpretedCode, input){
     //depending on what interpretedCode.keyword is, we call different functions
     input = input.toLowerCase();
-    let response = "";
-    switch(interpretedCode.keyword){
+    switch(interpretedCode.keyword.toLowerCase()){
         case "ifany":
             return chat_ifAny(interpretedCode, input);
         case "ifall":
             return chat_ifAll(interpretedCode, input);
         case "pickrandom":
-            return chat_pickRandom(interpretedCode, input);
+            return chat_pickRandom(interpretedCode);
         default:
             return "";
     }
@@ -289,5 +333,3 @@ function sendMessage(){
     })    
 
 }
-
-//l
