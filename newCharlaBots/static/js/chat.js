@@ -323,6 +323,7 @@ function sendMessage(botID){
             let input = document.getElementById("input").value;
             response = splitOnNewline(chat(canonicalArray[i], input));
             if(response != ""){
+                document.getElementById("output").value = response;
                 break;
             }
         }

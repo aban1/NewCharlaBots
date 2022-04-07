@@ -37,16 +37,17 @@ function startChat(){
 
 
     for(let i = 0; i < numResponses; i++){
-
-        if(i % 2 == 0)        
-            messages.append(sendMessage(botid1))
-        else
-            messages.append(sendMessage(botid2))
-
+        document.getElementById("input").value = document.getElementById("output").value;
+        if(i % 2 == 0){
+            sendMessage(botID1)
+        }
+        else{
+            sendMessage(botID2)
+        }
+        messages.append(document.getElementById("output").value)
+        console.log(document.getElementById("output").value);
     }
-
     console(messages)
     return messages
-
 }
 
