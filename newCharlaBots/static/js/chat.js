@@ -1,17 +1,5 @@
 const newline = "(nw-ln)";;
 const comment = "//"
-$(document).ready(function () {
-    let botID = document.getElementById("botid").innerHTML;
-    let url = "/getBotData/?botid=" + (botID).toString().trim();
-
-    fetch(url, {})
-        .then(response => response.json())
-        .then((data) =>{
-        let botname = data.data["botname"];
-        document.getElementById("titleText").innerHTML = "Let's Chat with " + botname + "!";
-    })    
-});
-
 //blocks is an array of strings. remove empty elements from array
 function blocksHelper(blocks){
     let ret = [];
@@ -101,11 +89,11 @@ function checkForKeyword(word){
         return word.slice(1,-1)
     }
     //case where {keyword}(nw-ln)
-    else if (word[0] != "{" || word[word.length - 1] != ")") return "long response";
+    else if (word[0] == "{" || word[word.length - 1] == ")") return "long response";
     else return false;
 }
 
-//we can also too lower it
+//removes comma and puts it in lower case
 function removeComma(word){
     if (word[word.length] == ","){
         word = word.slice(0,1);
@@ -163,7 +151,7 @@ function createCanonicalArray(blocks){
         let words = blocks[i].split(" ");
         //for every word remove capitalization and grammar
         for(let i = 0; i < words.length; i++){
-            words[i] = words[i].toLowerCase(); //TODO: should not tolowercase responses, just input words
+            //words[i] = words[i].toLowerCase(); //TODO: should not tolowercase responses, just input words
             words[i] = words[i].replace(/[.,\/#!$%\^&\*;:=\_`~]/g,"")
         }
 
@@ -173,7 +161,7 @@ function createCanonicalArray(blocks){
             alert("ERROR: no keyword at start, check code for assistance")
             return;
         }
-        else if (keyword == "pickrandom"){
+        else if (keyword == "pickRandom"){
             interpretedCode.push(createDictForPickRandom(blocks[i]));
             continue;
         }
@@ -188,7 +176,7 @@ function createCanonicalArray(blocks){
             //while it's not a keyword, add word to "words"
             let innerKeyword = checkForKeyword(words[j]);
             if (!innerKeyword){
-                rulesDict["words"].push(removeComma(words[j]));
+                rulesDict["words"].push(removeComma(words[j]).toLowerCase());
             }
             //it is a NOT keyword
             else if (innerKeyword.startsWith("and")){
@@ -197,7 +185,7 @@ function createCanonicalArray(blocks){
                 for (j = j + 1; j<words.length; j++){
                     //if it IS a keyword, we are at the response, end the loop
                     if (!checkForKeyword(words[j])){                    
-                        rulesDict["wordsNOT"].push(removeComma(words[j]));
+                        rulesDict["wordsNOT"].push(removeComma(words[j]).toLowerCase());
                     }
                     else{ 
                         endloop = true;
@@ -305,6 +293,17 @@ function chat(interpretedCode, input){
 
 }
 
+//turns newline + " " into \n
+function splitOnNewline(input){
+    let responseArr = String(input).split(newline + " ");
+    let output = "";
+    for (let i = 0; i < responseArr.length - 1; i++){
+        output += responseArr[i] + '\n';
+    }
+    output += responseArr[responseArr.length - 1];
+    return output;
+}
+
 function sendMessage(){
     //fetch canonical code
     let botID = document.getElementById("botid").innerHTML;
@@ -320,11 +319,9 @@ function sendMessage(){
         console.log(canonicalArray);
         let response = "";
         for (let i = 0; i < canonicalArray.length; i++){
-            //todo: take grammar out of input
             response = "";
             let input = document.getElementById("input").value;
-            console.log(input);
-            response = chat(canonicalArray[i], input);
+            response = splitOnNewline(chat(canonicalArray[i], input));
             if(response != ""){
                 break;
             }

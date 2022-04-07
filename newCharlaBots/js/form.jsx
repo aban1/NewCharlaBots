@@ -182,6 +182,18 @@ class Form extends React.Component {
       //figure out what language we just clicked
       window.location.replace("/chat?" + "botid="+ selection.slice(-1));
     }
+    else if (this.state.action.startsWith("chat2") && this.state.botChosen == ''){
+      this.setState({
+        botChosen : selection,
+        action : "chat2.1"
+      })
+    }
+    else if (this.state.action.startsWith("chat2.1")){
+      //go to a new window bring the 2 bot IDs as args
+      window.location.replace("/chat2?" + "botid1="+ this.state.botChosen.slice(-1) + "&botid2=" + selection.slice(-1));
+
+    }
+
 }
 
   render() {
@@ -219,23 +231,29 @@ class Form extends React.Component {
           ):(null)}
 
           <div> 
-            {(this.state.action == "chat1" || this.state.action == "chat2" || 
-            this.state.action == "chooseBotToEdit") ?(
+            {((this.state.action == "chat1" || this.state.action == "chat2" || 
+            this.state.action == "chooseBotToEdit") && this.state.botChosen == '') ?(
               <div>
                 Bot 1: <br></br>
                 {allOptions}
               </div>
-
+              ): (null)
+            }
+            {(this.state.action == "chat2.1") ?(
+              <div>
+                Bot 2: <br></br>
+                {allOptions}
+              </div>
               ): (null)
             }
 
-            {(this.state.action == "chat2")?(
+            {/* {(this.state.action == "chat2")?(
               <div>
                 Bot 2: <br></br>
                 {allOptions}
               </div>
               ):(null)
-            }
+            } */}
 
             {(this.state.action == "createBot" || this.state.action == "editBot")?(
               <div>

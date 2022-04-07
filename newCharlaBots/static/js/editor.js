@@ -154,7 +154,7 @@ function updateCanonicalCode(canonicalCode){
     
     let botName = document.getElementById("botname").value.toString().trim();
     let description = document.getElementById("description").value;
-    alert(canonicalCode);
+    //alert(canonicalCode);
     if (isEditor){
         let botID = document.getElementById("botid").innerHTML.toString().trim();    
         let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;

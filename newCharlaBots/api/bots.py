@@ -61,6 +61,22 @@ def get_bot_data():
 
     return flask.jsonify(**context), 200
 
+#get's bot data for 2 bots
+@newCharlaBots.app.route("/getBotData2/")
+def get_bot_data2():
+
+    connection = get_db()
+
+    botid1 = flask.request.args.get("botid1")
+    botid2 = flask.request.args.get("botid2")
+
+    data1 = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid1)).fetchone()
+    data2 = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid2)).fetchone()
+
+    context = {"data1" : data1, "data2" : data2}
+
+    return flask.jsonify(**context), 200
+
     
 @newCharlaBots.app.route("/deleteBot/")
 def delete_bot():

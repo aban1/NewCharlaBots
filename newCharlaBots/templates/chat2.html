@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Chat with a Bot</title>
+    <title>Have Two Bots Chat</title>
 </head>
 
 <body>
 
-    <div style="visibility: hidden;" id="botid"> {{botid}} </div>
+    <div style="visibility: hidden;" id="botid1"> {{botid1}} </div>
+    <div style="visibility: hidden;" id="botid2"> {{botid2}} </div>
+
 
     <div id = "form">
 
@@ -27,7 +29,7 @@
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script> 
-    <script type="text/javascript" src="{{ url_for('static', filename='js/chat1.js') }}"></script> 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/chat2.js') }}"></script> 
 
 </body>
 

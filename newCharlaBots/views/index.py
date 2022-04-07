@@ -40,3 +40,16 @@ def show_chat():
     context = { "botid" : botid }
 
     return flask.render_template("chat.html", **context)
+
+
+
+@newCharlaBots.app.route('/chat2/')
+def show_chat2():
+    """Display / route."""
+
+    botid1 = flask.request.args.get('botid1')
+    botid2 = flask.request.args.get('botid2')
+
+    context = { "botid1" : botid1, "botid2" : botid2}
+
+    return flask.render_template("chat2.html", **context)
