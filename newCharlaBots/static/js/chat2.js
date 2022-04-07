@@ -3,7 +3,7 @@ $(document).ready(function () {
     let botID2 = document.getElementById("botid2").innerHTML;
 
     console.log(botID1);
-    console.log(botID2);//this is nothing
+    console.log(botID2);
 
     let url = "/getBotData2/?botid1=" + (botID1).toString().trim() + "&botid2=" + (botID2).toString().trim();
 
@@ -25,9 +25,9 @@ function startChat(){
 
     //get data from first message and num responses
 
-    firstMessage = document.getElementById("input").innerHTML
+    //let firstMessage = document.getElementById("input").value
 
-    numResponses = document.getElementById("numResponses").innerHTML
+    let numResponses = document.getElementById("numResponses").value
 
     let botID1 = document.getElementById("botid1").innerHTML;
     let botID2 = document.getElementById("botid2").innerHTML;
