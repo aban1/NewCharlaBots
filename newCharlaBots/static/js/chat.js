@@ -304,9 +304,9 @@ function splitOnNewline(input){
     return output;
 }
 
-function sendMessage(){
+function sendMessage(botID){
     //fetch canonical code
-    let botID = document.getElementById("botid").innerHTML;
+    // let botID = document.getElementById("botid").innerHTML;
     let url = "/getBotData/?botid=" + (botID).toString().trim();
 
     fetch(url, {})
