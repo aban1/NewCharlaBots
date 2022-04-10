@@ -27,27 +27,28 @@ function startChat(){
 
     //let firstMessage = document.getElementById("input").value
 
-    let numResponses = document.getElementById("numResponses").value
+    let numResponses = document.getElementById("numResponses").value;
 
-    let botID1 = document.getElementById("botid1").innerHTML;
-    let botID2 = document.getElementById("botid2").innerHTML;
+    let botID1 = document.getElementById("botid1").innerHTML.trim();
+    let botID2 = document.getElementById("botid2").innerHTML.trim();
 
-    messages = [] 
+    messages = [];
 
 
 
     for(let i = 0; i < numResponses; i++){
         document.getElementById("input").value = document.getElementById("output").value;
         if(i % 2 == 0){
-            sendMessage(botID1)
+            messages.push(sendMessage(botID1))
         }
         else{
-            sendMessage(botID2)
+            messages.push(sendMessage(botID2))
         }
-        messages.append(document.getElementById("output").value)
+        // messages.append(document.getElementById("output").value)
         console.log(document.getElementById("output").value);
     }
-    console(messages)
+    console.log(messages)
     return messages
+    
 }
 

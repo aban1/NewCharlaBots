@@ -133,11 +133,9 @@ function createDictForLongResponse(blocks){
 
 
 }
-//TODO: deal with pick randoms
-//TODO: long responses
+
 //input: array of 'blocks' of canonical code
 //returns: array of dictionary of rules
-//TODO: bug: reply line not getting interpretted
 function createCanonicalArray(blocks){
     let interpretedCode = [];
     for (let i = 0; i < blocks.length; i++){
@@ -307,6 +305,7 @@ function splitOnNewline(input){
 function sendMessage(botID){
     //fetch canonical code
     // let botID = document.getElementById("botid").innerHTML;
+    console.log(botID)
     let url = "/getBotData/?botid=" + (botID).toString().trim();
 
     fetch(url, {})
@@ -323,11 +322,12 @@ function sendMessage(botID){
             let input = document.getElementById("input").value;
             response = splitOnNewline(chat(canonicalArray[i], input));
             if(response != ""){
-                document.getElementById("output").value = response;
+                // document.getElementById("output").value = response;
+                return reponse;
                 break;
             }
         }
         console.log(response);
-    })    
+    })
 
 }
