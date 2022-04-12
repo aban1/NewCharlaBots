@@ -224,21 +224,18 @@ function contains_all(inputWords, listWords) {
 //if the input has any of the NOT words, return true
 //else return false
 function chat_notAny(interpretedCode, input){
-    inputArr = input.split(" ");
-
     for (let i = 0; i < interpretedCode.wordsNOT.length; i++){
         if (inputArr.includes(interpretedCode.wordsNOT[i])) return true;
     }
-    
     return false;
 }
 
 //if the input has all of the NOT words, return true
 //else return false
 function chat_notAll(interpretedCode, input){
-    inputArr = input.split(" ");
     return contains_all(inputArr, interpretedCode.wordsNOT);
 }
+
 
 function chat_ifAny(interpretedCode, input){
     for (let i = 0; i < interpretedCode.words.length; i++){
@@ -254,8 +251,7 @@ function chat_ifAny(interpretedCode, input){
 }
 
 function chat_ifAll(interpretedCode, input){
-    inputArr = input.split(" ");
-    if (contains_all(inputArr, interpretedCode.words)){
+    if (contains_all(input, interpretedCode.words)){
         //we have a NOT word, dont respond
         if ((interpretedCode.keywordNOT == "andnotany" && chat_notAny(interpretedCode, input))||
             (interpretedCode.keywordNOT == "andnotall" && chat_notAll(interpretedCode, input))){
@@ -278,6 +274,7 @@ function chat_pickRandom(interpretedCode){
 function chat(interpretedCode, input){
     //depending on what interpretedCode.keyword is, we call different functions
     input = input.toLowerCase();
+    input = input.split(" ");
     switch(interpretedCode.keyword.toLowerCase()){
         case "ifany":
             return chat_ifAny(interpretedCode, input);
@@ -302,15 +299,15 @@ function splitOnNewline(input){
     return output;
 }
 
-function sendMessage(botID){
+async function sendMessage(botID){
     //fetch canonical code
-    // let botID = document.getElementById("botid").innerHTML;
-    console.log(botID)
     let url = "/getBotData/?botid=" + (botID).toString().trim();
-
-    fetch(url, {})
+    let responseMessage = fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
+
+
+        // console.log("input " + document.getElementById("inpu
         let canonicalCode = data.data["canonical"];
         let blocks = getBlocks(canonicalCode);
         let canonicalArray = createCanonicalArray(blocks);
@@ -322,12 +319,14 @@ function sendMessage(botID){
             let input = document.getElementById("input").value;
             response = splitOnNewline(chat(canonicalArray[i], input));
             if(response != ""){
-                // document.getElementById("output").value = response;
-                return reponse;
-                break;
+                return response;
             }
         }
-        console.log(response);
     })
 
+    // console.log(typeof responseMessage)
+
+    let response = responseMessage;
+    // console.log(response);
+    return response;
 }
