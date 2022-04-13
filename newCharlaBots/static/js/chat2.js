@@ -1,4 +1,7 @@
-$(document).ready(function () {
+let canonicalCode = [];
+$(document).ready(onReady());
+
+async function onReady() {
     let botID1 = document.getElementById("botid1").innerHTML;
     let botID2 = document.getElementById("botid2").innerHTML;
 
@@ -11,8 +14,34 @@ $(document).ready(function () {
                 let botname2 = data.data2["botname"];
                 document.getElementById("titleText").innerHTML = "Let's have " + botname1 + " chat with " + botname2 + "!";
     })
-});
 
+    canonicalCode = await getCanonicalCode(botID1, botID2);
+}
+
+async function getCanonicalCode(botID1, botID2){
+    let url = "/getBotData/?botid=" + (botID1).toString().trim();
+    let canonical1 = fetch(url, {})
+        .then(response => response.json())
+        .then((data) =>{
+        return data.data["canonical"];
+        }
+    )
+    let canonicalCode1 = await canonical1;
+    canonicalCode.push(canonicalCode1);
+
+    url = "/getBotData/?botid=" + (botID2).toString().trim();
+    let canonical2 = fetch(url, {})
+        .then(response => response.json())
+        .then((data) =>{
+        // console.log("input " + document.getElementById("inpu
+        return data.data["canonical"];
+        }
+    )
+    let canonicalCode2 = await canonical2;
+    canonicalCode.push(canonicalCode2);
+
+    return canonicalCode;
+}
 
 function startChat(){
     let initialMessage = document.getElementById("input").value;
@@ -23,21 +52,15 @@ function startChat(){
 async function chatHelper(){
     
     let numResponses = document.getElementById("numResponses").value;
-
-    let botID1 = document.getElementById("botid1").innerHTML.trim();
-    let botID2 = document.getElementById("botid2").innerHTML.trim();
-
     messages = [];
 
     for(let i = 0; i < numResponses; i++){
 
-        let bot = (i % 2 == 1) ? botID1 : botID2;
-        sendMessage(bot).then((val) =>{
-            messages.push(val);
-            document.getElementById("input").value = val;
-        })
+        let canonical = (i % 2 == 1) ? canonicalCode[0] : canonicalCode[1];
+        let message = sendMessageHelper(canonical);
+        messages.push(message);
+        document.getElementById("input").value = message;
     }
     console.log(messages)
     return messages
-    
 }

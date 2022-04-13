@@ -135,6 +135,7 @@ class Form extends React.Component {
     this.setState({
       action: "createLanguage"
     })
+    window.location.replace("/createLanguage/");
   }
 
 

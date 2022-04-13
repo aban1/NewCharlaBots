@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Create a Language</title>
+</head>
+
+<body>
+
+    <div id = "form">
+
+    <div id="title">
+        <h1 id="titleText"> Create a Language </h1>
+    </div>
+
+    <label id = "name" for="botname">Language Name:</label> <br>
+    <input type="text" id="langname" name="langname"> <br>
+
+
+    <div style="text-align:left;" id = mapping>
+        <h2>Language Mapping: </h2>
+
+        <div id = "">{ifAny}: <input type="text" id="ifAny" > </div>
+        <div id = "">{andNotAny}: <input type="text" id="andNotAny" > </div>
+        <div id = "">{ifAll}: <input type="text" id="ifAll"> </div>
+        <div id = "">{andNotAll}: <input type="text" id="andNotAll"> </div>
+        <div id = "">{replyLine}: <input type="text" id="replyLine"> </div>
+        <div id = "">{startReply}: <input type="text" id="startReply"> </div>
+        <div id = "">{endReply}: <input type="text" id="endReply"> </div>
+        <div id = "">{endIf}: <input type="text" id="endIf"> </div>
+        <div id = "">{pickRandom}: <input type="text" id="pickRandom" > </div>
+        <div id = "">{endPick}: <input type="text" id="endPick"> </div>
+        <input type="submit" value="Create Language" onclick = "createLang()"> 
+
+    </div>
+
+ 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/createLang.js') }}"></script> 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
+</body>
+
+<style>
+
+
+    #canonical{
+        width: 70%;
+    }
+    #form{
+        text-align: center;
+    }
+    #name{
+        font-size: 30px;
+    }
+    body{
+        background-color :  #d7e5f9;
+    }
+
+
+</style>
+
+</html>

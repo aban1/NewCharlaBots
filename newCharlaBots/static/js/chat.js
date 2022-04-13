@@ -16,6 +16,7 @@ function blocksHelper(blocks){
 //  for pickRadom, do not delete the newlines chars from canonical code
 //TODO: deal with pickRandom
 function getBlocks(lines){
+    console.log(lines)
     lines = lines.split(newline);
     let blocks = [];
     let blockString = "";
@@ -299,34 +300,22 @@ function splitOnNewline(input){
     return output;
 }
 
-async function sendMessage(botID){
-    //fetch canonical code
-    let url = "/getBotData/?botid=" + (botID).toString().trim();
-    let responseMessage = fetch(url, {})
-        .then(response => response.json())
-        .then((data) =>{
-
-
-        // console.log("input " + document.getElementById("inpu
-        let canonicalCode = data.data["canonical"];
-        let blocks = getBlocks(canonicalCode);
-        let canonicalArray = createCanonicalArray(blocks);
-        
-        console.log(canonicalArray);
-        let response = "";
-        for (let i = 0; i < canonicalArray.length; i++){
-            response = "";
-            let input = document.getElementById("input").value;
-            response = splitOnNewline(chat(canonicalArray[i], input));
-            if(response != ""){
-                return response;
-            }
+function sendMessageHelper(canonicalCode){
+    // console.log("input " + document.getElementById("inpu
+    // canonicalCode = data.data["canonical"];
+    
+    let blocks = getBlocks(canonicalCode);
+    let canonicalArray = createCanonicalArray(blocks);
+    
+    console.log(canonicalArray);
+    let response = "";
+    for (let i = 0; i < canonicalArray.length; i++){
+        response = "";
+        let input = document.getElementById("input").value;
+        response = splitOnNewline(chat(canonicalArray[i], input));
+        if(response != ""){
+            return response;
         }
-    })
-
-    // console.log(typeof responseMessage)
-
-    let response = responseMessage;
-    // console.log(response);
-    return response;
+    }
+    return responseMessage;
 }

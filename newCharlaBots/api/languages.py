@@ -3,22 +3,23 @@ from flask import request
 from newCharlaBots.model import get_db
 import newCharlaBots
 
-@newCharlaBots.app.route("/createLanguage/")
-def create_language():
-
+@newCharlaBots.app.route("/createLang/", methods=['POST'])
+def create_lang_helper():
     connection = get_db()
-
-    # botname = request.args.get("botname")
-
-    # cannonicalCode = request.args.get("cannonicalCode")
-
-    connection.execute("INSERT INTO languages (name, ifAny, andNotAny, ifAll, andNotAll,"
-    	" replyLine, startReply, endReply, endIf, pickRandom, endPick) "
-    	"Values (?,?,?,?,?,?,?,?,?,?,?)", 
-        ("spanish-Verbose","si any","and not any spanish","if all spanish","and not all spanish","reply line spanish","start reply spanish","end reply spanish","end if spanish","pick random spanish","end pick spanish"))
+    name = request.args.get("name")
+    ifany = request.args.get("ifany")
+    andnotany = request.args.get("andnotany")
+    ifall = request.args.get("ifall")
+    andnotall = request.args.get("andnotall")
+    replyline = request.args.get("replyline")
+    startreply = request.args.get("startreply")
+    endreply = request.args.get("endreply")
+    endif = request.args.get("endif")
+    pickrandom = request.args.get("pickrandom")
+    endpick = request.args.get("endpick")
+    connection.execute("INSERT INTO languages (name, ifAny, andNotAny, ifAll, andNotAll, replyLine, startReply, endReply, endIf, pickRandom, endPick) VALUES (?,?,?,?,?,?,?,?,?,?,?)", (name, ifany, andnotany, ifall, andnotall, replyline, startreply, endreply, endif, pickrandom, endpick))
 
     context = {}
-
     return flask.jsonify(**context), 200
 
 

@@ -53,3 +53,14 @@ def show_chat2():
     context = { "botid1" : botid1, "botid2" : botid2}
 
     return flask.render_template("chat2.html", **context)
+
+
+@newCharlaBots.app.route('/createLanguage/')
+def create_lang():
+    """Display / route."""
+
+    
+
+    context = {}
+
+    return flask.render_template("createLang.html", **context)
