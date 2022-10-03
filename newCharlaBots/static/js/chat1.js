@@ -30,6 +30,12 @@ async function onReady(){
 }
 
 function sendMessage(){
-    if (canonicalCode == "") alert("nope")
-    console.log(sendMessageHelper(canonicalCode));
+    if (canonicalCode == "") alert("cannoical code must not be empty");
+    let response = sendMessageHelper(canonicalCode);
+
+    bot2Messages.push(response);
+    document.getElementById("messages").innerHTML = response;
+    eraseTextInput();
+    console.log(response);
+
 }

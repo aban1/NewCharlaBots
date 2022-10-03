@@ -58,6 +58,9 @@ async function chatHelper(){
 
         let canonical = (i % 2 == 1) ? canonicalCode[0] : canonicalCode[1];
         let message = sendMessageHelper(canonical);
+        //TODO: erin
+        //if i % 2 == 0, bot1messages.push(message)
+        //else bot2messages.push(messages)
         messages.push(message);
         document.getElementById("input").value = message;
     }

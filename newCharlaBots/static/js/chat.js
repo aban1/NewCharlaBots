@@ -300,6 +300,10 @@ function splitOnNewline(input){
     return output;
 }
 
+function eraseTextInput(){
+    document.getElementById("input").value = "";
+}
+
 function sendMessageHelper(canonicalCode){
     // console.log("input " + document.getElementById("inpu
     // canonicalCode = data.data["canonical"];
@@ -312,6 +316,7 @@ function sendMessageHelper(canonicalCode){
     for (let i = 0; i < canonicalArray.length; i++){
         response = "";
         let input = document.getElementById("input").value;
+        
         response = splitOnNewline(chat(canonicalArray[i], input));
         if(response != ""){
             return response;

@@ -21,15 +21,16 @@
 
     <label id = "inputtitle" for="input">Input:</label><br>
     <textarea type="text" id="input" name="canonical"  cols="20"></textarea><br>
+    <div id="messages">(messages will appear here)</div>
     <br>
     <input type="submit" value="send" onclick=sendMessage()> 
-    <br><br>
     <button><a href="/">Back to Home</a></button> 
     </div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/chat1.js') }}"></script> 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/messages.js') }}"></script> 
 
 </body>
 
