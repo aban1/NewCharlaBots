@@ -8,23 +8,23 @@
 <body>
 
     <div style="visibility: hidden;" id="botid"> {{botid}} </div>
-
     <div id = "form">
+        <div id="title">
+            <h1 id="titleText"> </h1>
+        </div>
+        <label id = "inputtitle" for="input">Input:</label>
+        <textarea type="text" id="input" name="canonical"  cols="20"></textarea>
+        <input type="submit" value="send" onclick=sendMessage()> 
+        <button><a href="/">Back to Home</a></button> 
+        <div id = "Transcript">Conversation Transcript: 
+            <br>
+            <div id="inputMessages">(your messages will appear here)</div>
+            <div id="messages">(responses will appear here)</div>
+        </div>
 
-    <div id="title">
-        <h1 id="titleText"> </h1>
-    </div>
- 
 
+        
     
-    <div>chat: </div>
-
-    <label id = "inputtitle" for="input">Input:</label><br>
-    <textarea type="text" id="input" name="canonical"  cols="20"></textarea><br>
-    <div id="messages">(messages will appear here)</div>
-    <br>
-    <input type="submit" value="send" onclick=sendMessage()> 
-    <button><a href="/">Back to Home</a></button> 
     </div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
@@ -42,6 +42,7 @@
     }
     #form{
         text-align: center;
+        white-space:pre-wrap;
     }
     #name{
         font-size: 30px;
@@ -49,6 +50,19 @@
     body{
         background-color :  #d7e5f9;
     }
+
+    #inputMessages{
+        float: right;
+        width: 50%;
+    }
+
+    #messages{
+        float: left;
+        width: 50%;
+
+    }
+
+
 
 
 </style>

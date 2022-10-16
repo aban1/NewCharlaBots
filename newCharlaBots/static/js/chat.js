@@ -305,8 +305,7 @@ function eraseTextInput(){
 }
 
 function sendMessageHelper(canonicalCode){
-    // console.log("input " + document.getElementById("inpu
-    // canonicalCode = data.data["canonical"];
+    
     
     let blocks = getBlocks(canonicalCode);
     let canonicalArray = createCanonicalArray(blocks);
