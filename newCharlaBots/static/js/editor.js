@@ -161,6 +161,7 @@ function updateCanonicalCode(canonicalCode){
         fetch(url, {method: 'PATCH'});    
     }
     else{
+        console.log("adding canonical code: ", canonicalCode);
         let url = "/createBot/?botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
         fetch(url, {method: 'POST'});
     }

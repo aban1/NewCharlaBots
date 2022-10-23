@@ -322,5 +322,5 @@ function sendMessageHelper(canonicalCode){
             return response;
         }
     }
-    return responseMessage;
+    return response;
 }
