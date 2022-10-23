@@ -1,4 +1,5 @@
 let canonicalCode = "";
+let botname = "";
 
 $(document).ready(onReady());
 
@@ -10,7 +11,7 @@ async function onReady(){
     fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
-        let botname = data.data["botname"];
+        botname = data.data["botname"];
         document.getElementById("titleText").innerHTML = "Let's Chat with " + botname + "!";
     })
 
@@ -34,8 +35,36 @@ function sendMessage(){
     let response = sendMessageHelper(canonicalCode);
 
     bot2Messages.push(response);
-    document.getElementById("messages").innerHTML = response;
+    formatMessage(response);
     eraseTextInput();
     console.log(response);
+    console.log("from sendMessage");
+
+}
+
+
+function formatMessage(response){
+
+    console.log(document.getElementById("messages").innerHTML);
+
+    if(document.getElementById("inputMessages").innerHTML == "(your messages will appear here)"){
+        document.getElementById("inputMessages").innerHTML = document.getElementById("input").value + '\n' + '\n' + '\n' + '\n';
+    }
+
+    else{
+        document.getElementById("inputMessages").innerHTML += document.getElementById("input").value + '\n' + '\n' + '\n' + '\n';
+    }
+
+
+    if(document.getElementById("messages").innerHTML == "(responses will appear here)"){
+
+        document.getElementById("messages").innerHTML = response + '\n' + '\n' + '\n' + '\n' ;
+    }
+
+    else{
+
+        document.getElementById("messages").innerHTML += botname + " said:  " + response + '\n' + '\n' + '\n' + '\n';
+
+    }
 
 }
