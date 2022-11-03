@@ -1,5 +1,6 @@
 import flask
 import newCharlaBots
+from newCharlaBots.model import get_db
 
 @newCharlaBots.app.route('/')
 def show_index():
@@ -35,9 +36,17 @@ def show_create():
 def show_chat():
     """Display / route."""
 
+    connection = get_db()
     botid = flask.request.args.get('botid')
 
-    context = { "botid" : botid }
+    messages = connection.execute("SELECT * FROM messages WHERE botid == ?", (botid)).fetchall()
+
+
+
+    context = { "botid" : botid,
+                "messages": messages }
+
+    
 
     return flask.render_template("chat.html", **context)
 

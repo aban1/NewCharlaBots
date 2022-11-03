@@ -47,7 +47,7 @@ function formatMessage(response){
 
     console.log(document.getElementById("messages").innerHTML);
 
-    if(document.getElementById("inputMessages").innerHTML == "(your messages will appear here)"){
+    if(document.getElementById("inputMessages").innerHTML == "(responses will appear here)"){
         document.getElementById("inputMessages").innerHTML = document.getElementById("input").value + '\n' + '\n' + '\n' + '\n';
     }
 
@@ -63,7 +63,7 @@ function formatMessage(response){
 
     else{
 
-        document.getElementById("messages").innerHTML += botname + " said:  " + response + '\n' + '\n' + '\n' + '\n';
+        document.getElementById("messages").innerHTML +=  response + '\n' + '\n' + '\n' + '\n';
 
     }
 
