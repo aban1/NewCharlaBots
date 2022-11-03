@@ -114,10 +114,10 @@ def get_bot_names():
 def get_bot_and_lang():
     connection = get_db()
     botid = flask.request.args.get("botID")
-    data_botID = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid)).fetchone()
+    data_botID = connection.execute("SELECT * FROM bots WHERE botid=?" , [botid]).fetchone()
 
     langID = flask.request.args.get("langID")
-    data_langID = connection.execute("SELECT * FROM languages WHERE languageid=?", (langID)).fetchone()
+    data_langID = connection.execute("SELECT * FROM languages WHERE languageid=?", [langID]).fetchone()
     context = {"botInfo" : data_botID, "langInfo" : data_langID}
 
     return flask.jsonify(**context), 200
