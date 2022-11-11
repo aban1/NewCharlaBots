@@ -45,26 +45,19 @@ function sendMessage(){
 
 function formatMessage(response){
 
-    console.log(document.getElementById("messages").innerHTML);
+    const userInput = document.getElementById("input").value;
 
-    if(document.getElementById("inputMessages").innerHTML == "(responses will appear here)"){
-        document.getElementById("inputMessages").innerHTML = document.getElementById("input").value + '\n' + '\n' + '\n' + '\n';
-    }
+    let tempUser = `<div class="inputMessages"><p class="inputText">${userInput}</p></div>`;
 
-    else{
-        document.getElementById("inputMessages").innerHTML += document.getElementById("input").value + '\n' + '\n' + '\n' + '\n';
-    }
+    let tempBot = `<div class="messages"><p class="msgText">${response}</p></div>`;
 
+    let tempInput = document.querySelector(".Transcript");
+    console.log(tempInput);
+    tempInput.insertAdjacentHTML("beforeend", tempUser); 
 
-    if(document.getElementById("messages").innerHTML == "(responses will appear here)"){
+    let tempResponse = document.querySelector(".Transcript");
 
-        document.getElementById("messages").innerHTML = response + '\n' + '\n' + '\n' + '\n' ;
-    }
+    tempResponse.insertAdjacentHTML("beforeend", tempBot); 
 
-    else{
-
-        document.getElementById("messages").innerHTML +=  response + '\n' + '\n' + '\n' + '\n';
-
-    }
 
 }

@@ -39,14 +39,7 @@ def show_chat():
     connection = get_db()
     botid = flask.request.args.get('botid')
 
-    messages = connection.execute("SELECT * FROM messages WHERE botid == ?", (botid)).fetchall()
-
-
-
-    context = { "botid" : botid,
-                "messages": messages }
-
-    
+    context = { "botid" : botid}
 
     return flask.render_template("chat.html", **context)
 
