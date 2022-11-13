@@ -115,8 +115,10 @@ function createDictForPickRandom(block){
 
     responseArr = block.split(" " + newline);
     //remove first and last 2 elements of responseArr
-    responseArr.pop();
-    responseArr.pop();
+    while (responseArr[responseArr.length - 1] == "" 
+        || responseArr[responseArr.length - 1] == "{endPick}"){
+        responseArr.pop();
+    }
     responseArr.shift();
     rulesDict["response"] = responseArr;
     return rulesDict;
@@ -267,6 +269,7 @@ function chat_ifAll(interpretedCode, input){
 
 function chat_pickRandom(interpretedCode){
     //see how large response is, pick a random one
+    console.log(interpretedCode);
     let idx = Math.floor(Math.random() * interpretedCode.response.length);
     return interpretedCode.response[idx];
 }

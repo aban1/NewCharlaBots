@@ -104,16 +104,19 @@ function saveBot(){
         let canonicalCode = "";
         let translatedCode = document.getElementById("canonical").value; 
         let translatedLines = translatedCode.split("\n");
+        translatedLines = translatedLines.trim();
         let mappings = data;
     
         for(let i = 0; i < translatedLines.length; i++){
             let line = translatedLines[i].trim();
+            if (line == "") continue;
             line = translateLineToCanonical(mappings, line);
             canonicalCode += line;
-            if (i != translatedLines.length-1){
+            if (i != translatedLines.length - 1){
                 canonicalCode += newline;
             }
         }
+        canonicalCode.trim();
         //send the updated code back to database
         updateCanonicalCode(canonicalCode);
     })
