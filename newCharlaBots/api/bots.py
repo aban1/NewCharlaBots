@@ -122,3 +122,27 @@ def get_bot_and_lang():
 
     return flask.jsonify(**context), 200
 
+@newCharlaBots.app.route("/postChat/", methods =["POST"])
+def post_bot_chat():
+
+    connection = get_db()
+
+    botText = flask.request.json['botText']
+    yourText = flask.request.json['yourText']
+    botid = flask.request.args.get("botid")
+
+
+    connection.execute("INSERT INTO messages(botid, isUser, text) VALUES (?, ?, ?)", (botid, 1, yourText))
+
+    connection.execute("INSERT INTO messages(botid, isUser, text) VALUES (?, ?, ?)", (botid, 0, botText))
+
+
+    return {"msg": "Added successfully"}, 204
+
+@newCharlaBots.app.route("/clearChat/")
+def clear_bot_chat():
+    connection = get_db()
+
+    connection.execute("DELETE FROM messages")
+
+    return {"msg": "Deleted successfully"}, 204

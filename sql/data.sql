@@ -1,0 +1,7 @@
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE messages(
+  messid INTEGER PRIMARY KEY AUTOINCREMENT,
+  isUser INTEGER NOT NULL,
+  text VARCHAR(50) NOT NULL
+);
