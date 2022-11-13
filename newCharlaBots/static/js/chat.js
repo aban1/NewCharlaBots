@@ -302,6 +302,7 @@ function splitOnNewline(input){
 
 function eraseTextInput(){
     document.getElementById("input").value = "";
+    document.getElementById("input").innerHTML = "";
 }
 
 function sendMessageHelper(canonicalCode){
@@ -310,16 +311,17 @@ function sendMessageHelper(canonicalCode){
     let blocks = getBlocks(canonicalCode);
     let canonicalArray = createCanonicalArray(blocks);
     
-    console.log(canonicalArray);
+    //console.log(canonicalArray);
     let response = "";
     for (let i = 0; i < canonicalArray.length; i++){
         response = "";
         let input = document.getElementById("input").value;
-        
+        // document.getElementById("input").value = "";
         response = splitOnNewline(chat(canonicalArray[i], input));
         if(response != ""){
+            console.log( response);
+
             return response;
         }
     }
-    return response;
 }

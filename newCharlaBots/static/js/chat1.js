@@ -37,9 +37,7 @@ function sendMessage(){
     bot2Messages.push(response);
     formatMessage(response);
     eraseTextInput();
-    console.log(response);
-    console.log("from sendMessage");
-
+    document.getElementById("input").value = "";
 }
 
 
@@ -68,3 +66,12 @@ function formatMessage(response){
     }
 
 }
+
+document.getElementById("input").addEventListener('keypress', function(e){
+    if (e.key === 'Enter'){
+        e.preventDefault();
+        document.getElementById("input").innerHTML = document.getElementById("input").innerHTML.trim();
+        sendMessage();
+        eraseTextInput();
+    }
+})
