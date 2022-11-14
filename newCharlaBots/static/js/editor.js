@@ -104,7 +104,6 @@ function saveBot(){
         let canonicalCode = "";
         let translatedCode = document.getElementById("canonical").value; 
         let translatedLines = translatedCode.split("\n");
-        translatedLines = translatedLines.trim();
         let mappings = data;
     
         for(let i = 0; i < translatedLines.length; i++){
