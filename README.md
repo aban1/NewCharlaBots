@@ -15,7 +15,8 @@ The following commands are run within the NewCharlaBots folder:
     (first remove the npx webpack line if present. You will only need to do this once)
 4. Open localhost http://localhost:8000/ in a browser
 
-
+# To Test
+npm test
 
 
 

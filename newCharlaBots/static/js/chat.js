@@ -83,7 +83,6 @@ function getBlocks(lines){
 
     return blocksHelper(blocks);
 }
-
 //returns the keyword if found, false if not, empty string if start/end long response
 function checkForKeyword(word){
     if (word[0] == "{" || word[word.length - 1] == "}"){
@@ -96,8 +95,8 @@ function checkForKeyword(word){
 
 //removes comma and puts it in lower case
 function removeComma(word){
-    if (word[word.length] == ","){
-        word = word.slice(0,1);
+    if (word[word.length - 1] == ","){
+        word = word.slice(0,-1);
     }
     return word.toLowerCase();
 }
@@ -327,4 +326,8 @@ function sendMessageHelper(canonicalCode){
             return response;
         }
     }
+}
+
+module.exports = {
+    removeComma: removeComma,
 }
