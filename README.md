@@ -16,7 +16,9 @@ The following commands are run within the NewCharlaBots folder:
 4. Open localhost http://localhost:8000/ in a browser
 
 # To Test
+to run all tests:
 npm test
+to run a specific test: npm test [testFileName]
 
 
 
