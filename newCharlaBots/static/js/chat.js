@@ -133,8 +133,6 @@ function createDictForLongResponse(blocks){
         "response" : []
     };
     rulesDict["keyword"] ="startReply";
-
-
 }
 
 //input: array of 'blocks' of canonical code
@@ -325,10 +323,10 @@ function sendMessageHelper(canonicalCode){
     }
 }
 
-//there is probably a better way than exporting every function individually
 module.exports = {
     removeComma: removeComma,
     blocksHelper: blocksHelper,
     checkForKeyword: checkForKeyword,
-    contains_all: contains_all
+    contains_all: contains_all,
+    createDictForPickRandom: createDictForPickRandom
 }
