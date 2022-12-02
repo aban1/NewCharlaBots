@@ -23,7 +23,6 @@
             <h1 id="titleText"> </h1>
         </div>
         <div class = "Transcript"> 
-            <br>
             <div id="messages"></div>
         </div>
         <div class="msger-inputarea">
@@ -73,6 +72,7 @@
         font: 400 .9em 'Open Sans', sans-serif;
         border: 1px solid #dfd087;
         border-radius: 10px;
+
     }
 
     .btn {
@@ -102,6 +102,7 @@
         font: 400 .9em 'Open Sans', sans-serif;
         border: 1px solid #97C6E3;
         border-radius: 10px;
+        resize: both;
     }
 
     .messages:after {
@@ -132,11 +133,12 @@
 
     .msgText{
         overflow: hidden;
-        white-space: nowrap;
-        animation: 
-        typing 1s steps(20, end) forwards;
+        white-space: initial;
+
         font-size: 1.6rem;
-        width: 0;
+        animation:
+        typing 3.5s steps(10, end),
+        blink-caret .75s step-end infinite;
         display:inline-block; 
 
     }
@@ -148,8 +150,8 @@
     } 
 
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+    from { background: 0 }
+    to { background: 100% }
 }
 
 
@@ -211,6 +213,11 @@
 }
 .msger-send-btn:hover {
   background: rgb(0, 180, 50);
+}
+
+.Transcript{
+    height: 300px;
+    overflow-y: scroll;
 }
 
 </style>

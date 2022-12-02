@@ -32,60 +32,60 @@ class Form extends React.Component {
 
 
   //handles selection to chat with a bot
-  //action: chat1 -> chat with 1 bot, chat2 -> chat with 2 bots
-   chatWithBot(selection){
-      const url = '/getAllBotNames/';
-      fetch(url, {})
-        .then(response => response.json())
-        .then((data) =>{
+  // //action: chat1 -> chat with 1 bot, chat2 -> chat with 2 bots
+  //  chatWithBot(selection){
+  //     const url = '/getAllBotNames/';
+  //     fetch(url, {})
+  //       .then(response => response.json())
+  //       .then((data) =>{
 
-          let options = [];
-          let bot = "bot";
+  //         let options = [];
+  //         let bot = "bot";
 
-          // console.log(data)
-          for (const index in data.data){
-            options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
-          }
+  //         // console.log(data)
+  //         for (const index in data.data){
+  //           options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
+  //         }
 
-        this.setState({
-          options : options,
-        })
-      })
+  //       this.setState({
+  //         options : options,
+  //       })
+  //     })
 
-    let action = (selection == "button0") ?  "chat1": "chat2";
+  //   let action = (selection == "button0") ?  "chat1": "chat2";
 
-    this.setState({
-      action : action
-    })
+  //   this.setState({
+  //     action : action
+  //   })
 
-  } 
+  // } 
 
-   //handles selection to chat with a bot
-   selectBotToEdit(selection){
-    const url = '/getAllBotNames/';
-    fetch(url, {})
-      .then(response => response.json())
-      .then((data) =>{
+//    //handles selection to chat with a bot
+//    selectBotToEdit(selection){
+//     const url = '/getAllBotNames/';
+//     fetch(url, {})
+//       .then(response => response.json())
+//       .then((data) =>{
 
-        let options = [];
-        let bot = "editBot";
+//         let options = [];
+//         let bot = "editBot";
 
-        for (const index in data.data){
-          options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
-        }
+//         for (const index in data.data){
+//           options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
+//         }
 
-      this.setState({
-        options : options,
-      })
-    })
+//       this.setState({
+//         options : options,
+//       })
+//     })
 
-  let action = "chooseBotToEdit";
+//   let action = "chooseBotToEdit";
 
-  this.setState({
-    action : action
-  })
+//   this.setState({
+//     action : action
+//   })
 
-} 
+// } 
   
   //edit a bot
   editBot(selection){

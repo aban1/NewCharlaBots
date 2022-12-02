@@ -45,18 +45,24 @@ function formatMessage(response){
 
     const userInput = document.getElementById("input").value;
 
-    let tempUser = `<div class="inputMessages"><p class="inputText">${userInput}</p></div>`;
+    inputHeight = (userInput.length / 2) + 50;
 
-    let tempBot = `<div class="messages"><p class="msgText">${response}</p></div>`;
+    respHeight = (response.length / 2) + 50;
+
+    let tempUser = `<div class="inputMessages" style="height: ${inputHeight}px"><p class="inputText">${userInput}</p></div>`;
+
+    let tempBot = `<div class="messages" style="height: ${respHeight}px"><span class="msgText">${response}</span></div>`;
 
     let tempInput = document.querySelector(".Transcript");
-    console.log(tempInput);
+    
     tempInput.insertAdjacentHTML("beforeend", tempUser); 
 
     let tempResponse = document.querySelector(".Transcript");
 
     tempResponse.insertAdjacentHTML("beforeend", tempBot); 
 
+    let elem = document.querySelector(".Transcript");
+    elem.scrollTop = elem.scrollHeight;
 
 }
 

@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
     <meta charset="utf-8"/>
     <title>Have Two Bots Chat</title>
 </head>
 
 <body>
-
     <div style="visibility: hidden;" id="botid1"> {{botid1}} </div>
     <div style="visibility: hidden;" id="botid2"> {{botid2}} </div>
-
-
+    <div class="right">
+        <button class="btn"><a href="/"><i class="fa fa-home"></i> Home</a></button> 
+    </div>
     <div id = "form">
-
     <div id="title">
         <h1 id="titleText"> </h1>
     </div>
-    
-    <div> First Message: </div>
-    <textarea type="text" id="input" name="canonical"  cols="20"></textarea><br>
-
-    <div> Number of Responses: </div>
-    <textarea type="text" id="numResponses" name="canonical"  cols="20"></textarea><br>
-
-    <br>
-    <input type="submit" value="start" onclick = "startChat()"> 
-    <br><br>
-    <button><a href="/">Back to Home</a></button> 
+    <div id="botNames">
+        <h2 id="bot1"></h2><h2 id="bot2"></h2>
     </div>
+    <br>
+    <div class = "Transcript"> 
+        <div id="messages"></div>
+    </div>
+    <div class="msger-inputarea">
+        <input type="text" placeholder="" id="input" name="canonical"  cols="20"></input>
+        <label id="numResponsesLabel">Number of Responses: </label>
+        <input class="quantity" id="numResponses" min="0" name="form-0-quantity" value="1" type="number" placeholder="Number of messages">
+        <input type="submit" class="msger-send-btn" value="start" onclick=startChat()>  
+    </div>
+
+
+    <!-- <div> Number of Responses: </div>
+    <textarea type="text" id="numResponses" name="canonical"  cols="20"></textarea><br>
+    <input type="submit" value="start" onclick = "startChat()">  -->
+
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script> 
@@ -44,6 +51,7 @@
     }
     #form{
         text-align: center;
+        white-space:pre-wrap;
     }
     #name{
         font-size: 30px;
@@ -52,6 +60,198 @@
         background-color :  #d7e5f9;
     }
 
+    #bot1{
+        display: inline;
+        float: right;
+        margin: 0px;
+        margin-right: 25%;
+    }
+
+    #bot2{
+        display: inline;
+        float: left;
+        margin: 0px;
+        margin-left: 25%;
+    }
+
+    #botNames{
+        display: inline;
+        clear: both;
+    }
+
+    .inputMessages {
+        position: relative;
+        margin-bottom: 10px;
+        margin-left: calc(100% - 550px);
+        padding: 10px;
+        background-color: #f8e896;
+        width: 500px;
+        height: 50px;
+        text-align: left;
+        font: 400 .9em 'Open Sans', sans-serif;
+        border: 1px solid #dfd087;
+        border-radius: 10px;
+
+    }
+
+
+    .btn {
+        background-color: #eee; /* Blue background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 12px 16px; /* Some padding */
+        font-size: 20px; /* Set a font size */
+        cursor: pointer; /* Mouse pointer on hover */
+        text-decoration: none;
+    }
+
+    a:link{
+        text-decoration: none!important;
+    }
+
+
+    .messages {
+        position: relative;
+        margin-left: 20px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #A8DDFD;
+        width: 500px;
+        height: 50px;
+        text-align: left;
+        font: 400 .9em 'Open Sans', sans-serif;
+        border: 1px solid #97C6E3;
+        border-radius: 10px;
+        resize: both;
+    }
+
+    .messages:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 15px solid #A8DDFD;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        top: 0;
+        left: -15px;
+    }
+
+    .messages:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 17px solid #97C6E3;
+        border-left: 16px solid transparent;
+        border-right: 16px solid transparent;
+        top: -1px;
+        left: -17px;
+    }
+
+
+
+    .msgText{
+        overflow: hidden;
+        white-space: initial;
+
+        font-size: 1.6rem;
+        animation:
+        typing 3.5s steps(10, end),
+        blink-caret .75s step-end infinite;
+        display:inline-block; 
+
+    }
+
+    .inputText{
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 1.6rem;
+    } 
+
+@keyframes typing {
+    from { background: 0 }
+    to { background: 100% }
+}
+
+
+.inputMessages:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-bottom: 15px solid #f8e896;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    bottom: 0;
+    right: -15px;
+}
+
+.inputMessages:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-bottom: 17px solid #dfd087;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    bottom: -1px;
+    right: -17px;
+}
+
+.msger-inputarea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex-direction: row;
+  padding: 10px;
+  border-top: var(--border);
+  background: #eee;
+  padding-right: 20px;
+}
+
+.msger-inputarea * {
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 1.25em;
+}
+#input {
+  width: 100%;
+  background: #ddd;
+  margin-bottom: 10px;
+}
+
+
+.msger-send-btn {
+  width: 10%;
+  margin-left: 10px;
+  background: rgb(0, 196, 65);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+}
+.msger-send-btn:hover {
+  background: rgb(0, 180, 50);
+}
+
+.Transcript{
+    height: 280px;
+    overflow-y: scroll;
+}
+
+#numResponsesLabel{
+    font: 400 1.2em 'Open Sans', sans-serif;
+}
+
+#numResponses{
+    width: 50px;
+}
+
+#titleText{
+    margin: 0px;
+}
 
 </style>
 
