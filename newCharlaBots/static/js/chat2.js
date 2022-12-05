@@ -13,6 +13,9 @@ async function onReady() {
                 let botname1 = data.data1["botname"];
                 let botname2 = data.data2["botname"];
                 document.getElementById("titleText").innerHTML = "Let's have " + botname1 + " chat with " + botname2 + "!";
+                document.getElementById("bot1").innerHTML = botname1;
+                document.getElementById("bot2").innerHTML = botname2;
+                document.getElementById("input").placeholder = "Enter " + botname1 + "'s starting message ...";
     })
 
     canonicalCode = await getCanonicalCode(botID1, botID2);
@@ -45,6 +48,12 @@ async function getCanonicalCode(botID1, botID2){
 
 function startChat(){
     let initialMessage = document.getElementById("input").value;
+
+    msgHeight = (initialMessage.length / 2) + 50;
+    let tempInput = document.querySelector(".Transcript");
+    let bot1Msg = `<div class="inputMessages" style="height: ${msgHeight}px"><p class="inputText">${initialMessage}</p></div>`;
+    tempInput.insertAdjacentHTML("beforeend", bot1Msg);
+
     chatHelper();
     document.getElementById("input").value = initialMessage;
 }
@@ -61,6 +70,19 @@ async function chatHelper(){
         console.log(message);
         messages.push(message);
         document.getElementById("input").value = message;
+
+        msgHeight = (message.length / 2) + 50;
+
+        let tempInput = document.querySelector(".Transcript");
+
+        if (i % 2 == 1){
+            let bot1Msg = `<div class="inputMessages" style="height: ${msgHeight}px"><p class="inputText">${message}</p></div>`;
+            tempInput.insertAdjacentHTML("beforeend", bot1Msg);
+        }
+        else{
+            let tempBot = `<div class="messages" style="height: ${msgHeight}px"><span class="msgText">${message}</span></div>`;
+            tempInput.insertAdjacentHTML("beforeend", tempBot); 
+        }
     }
     console.log(messages)
     return messages

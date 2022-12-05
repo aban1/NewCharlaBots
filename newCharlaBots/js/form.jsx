@@ -11,11 +11,11 @@ class Form extends React.Component {
     this.state = {
 
       options : [
-        {text :'Chat with a Bot', key: 'button0'},
-        {text :'Create a Bot', key: 'button1'},
-        {text :'Edit a Bot', key: 'button2'},
-        {text :'Chat with Two Bots', key: 'button3'},
-        {text :'Create a Bot Language', key: 'button4'},
+        // {text :'Chat with a Bot', key: 'button0'},
+        // {text :'Create a Bot', key: 'button1'},
+        // {text :'Edit a Bot', key: 'button2'},
+        // {text :'Chat with Two Bots', key: 'button3'},
+        // {text :'Create a Bot Language', key: 'button4'},
       ],
 
       action: '',

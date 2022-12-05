@@ -4,6 +4,7 @@ const comment = "//"
 function blocksHelper(blocks){
     let ret = [];
     for (let i = 0; i< blocks.length; i++){
+        blocks[i] = blocks[i].trim();
         if (blocks[i] != ""){
             ret.push(blocks[i].trim());
         }
@@ -83,21 +84,20 @@ function getBlocks(lines){
 
     return blocksHelper(blocks);
 }
-
 //returns the keyword if found, false if not, empty string if start/end long response
 function checkForKeyword(word){
-    if (word[0] == "{" || word[word.length - 1] == "}"){
+    if (word[0] == "{" && word[word.length - 1] == "}"){
         return word.slice(1,-1)
     }
     //case where {keyword}(nw-ln)
-    else if (word[0] == "{" || word[word.length - 1] == ")") return "long response";
-    else return false;
+    else if (word[0] == "{" && word[word.length - 1] == ")") return "long response";
+    return false;
 }
 
 //removes comma and puts it in lower case
 function removeComma(word){
-    if (word[word.length] == ","){
-        word = word.slice(0,1);
+    if (word[word.length - 1] == ","){
+        word = word.slice(0,-1);
     }
     return word.toLowerCase();
 }
@@ -138,8 +138,6 @@ function createDictForLongResponse(blocks){
         "response" : []
     };
     rulesDict["keyword"] ="startReply";
-
-
 }
 
 //input: array of 'blocks' of canonical code
@@ -231,7 +229,7 @@ function contains_all(inputWords, listWords) {
 
 //if the input has any of the NOT words, return true
 //else return false
-function chat_notAny(interpretedCode, input){
+function chat_notAny(interpretedCode, inputArr){
     for (let i = 0; i < interpretedCode.wordsNOT.length; i++){
         if (inputArr.includes(interpretedCode.wordsNOT[i])) return true;
     }
@@ -240,7 +238,7 @@ function chat_notAny(interpretedCode, input){
 
 //if the input has all of the NOT words, return true
 //else return false
-function chat_notAll(interpretedCode, input){
+function chat_notAll(interpretedCode, inputArr){
     return contains_all(inputArr, interpretedCode.wordsNOT);
 }
 
@@ -313,17 +311,13 @@ function eraseTextInput(){
 }
 
 function sendMessageHelper(canonicalCode){
-    
-    
     let blocks = getBlocks(canonicalCode);
     let canonicalArray = createCanonicalArray(blocks);
     
-    //console.log(canonicalArray);
     let response = "";
     for (let i = 0; i < canonicalArray.length; i++){
         response = "";
         let input = document.getElementById("input").value;
-        // document.getElementById("input").value = "";
         response = splitOnNewline(chat(canonicalArray[i], input));
         if(response != ""){
             // console.log( response);
