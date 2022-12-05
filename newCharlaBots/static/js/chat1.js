@@ -26,7 +26,7 @@ async function onReady(){
     )
     canonicalCode = await canonical;
     
-    console.log(canonicalCode);
+    // console.log(canonicalCode);
     //return canonicalCode;
 }
 

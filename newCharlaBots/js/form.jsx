@@ -42,7 +42,7 @@ class Form extends React.Component {
           let options = [];
           let bot = "bot";
 
-          // console.log(data)
+
           for (const index in data.data){
             options.push({text: data.data[index]["name"], key: bot + data.data[index]["key"]});
           }
@@ -180,8 +180,9 @@ class Form extends React.Component {
       window.location.replace("/create?" + "langid="+ selection.slice(-1));
     }
     else if (this.state.action.startsWith("chat1")){
+      // alert("hi")
       //figure out what language we just clicked
-      window.location.replace("/chat?" + "botid="+ selection.slice(-1));
+      window.location.replace("/chat?" + "botid="+ selection.slice(3));
     }
     else if (this.state.action.startsWith("chat2") && this.state.botChosen == ''){
       this.setState({

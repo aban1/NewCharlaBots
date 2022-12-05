@@ -55,7 +55,7 @@ def get_bot_data():
 
     botid = flask.request.args.get("botid")
 
-    data = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid)).fetchone()
+    data = connection.execute("SELECT * FROM bots WHERE botid=?" , [botid] ).fetchone()
 
     context = {"data" : data}
 
@@ -70,8 +70,8 @@ def get_bot_data2():
     botid1 = flask.request.args.get("botid1")
     botid2 = flask.request.args.get("botid2")
 
-    data1 = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid1)).fetchone()
-    data2 = connection.execute("SELECT * FROM bots WHERE botid=?" , (botid2)).fetchone()
+    data1 = connection.execute("SELECT * FROM bots WHERE botid=?" , [botid1] ).fetchone()
+    data2 = connection.execute("SELECT * FROM bots WHERE botid=?" , [botid2] ).fetchone()
 
     context = {"data1" : data1, "data2" : data2}
 

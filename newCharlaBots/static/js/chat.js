@@ -16,7 +16,7 @@ function blocksHelper(blocks){
 //  for pickRadom, do not delete the newlines chars from canonical code
 //TODO: deal with pickRandom
 function getBlocks(lines){
-    console.log(lines)
+    // console.log(lines)
     lines = lines.split(newline);
     let blocks = [];
     let blockString = "";
@@ -112,13 +112,18 @@ function createDictForPickRandom(block){
         "response" : []
     };
 
-    
+
     rulesDict["keyword"] ="pickRandom";
+
 
     responseArr = block.split(" " + newline);
     //remove first and last 2 elements of responseArr
+    
+    while (responseArr[responseArr.length - 1] == "" 
+    || responseArr[responseArr.length - 1] == "{endPick}"){
     responseArr.pop();
-    responseArr.pop();
+}
+
     responseArr.shift();
     rulesDict["response"] = responseArr;
     return rulesDict;
@@ -321,7 +326,7 @@ function sendMessageHelper(canonicalCode){
         // document.getElementById("input").value = "";
         response = splitOnNewline(chat(canonicalArray[i], input));
         if(response != ""){
-            console.log( response);
+            // console.log( response);
 
             return response;
         }
