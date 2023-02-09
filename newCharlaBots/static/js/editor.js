@@ -153,20 +153,55 @@ function translateLineToCanonical(mapping, line){
 
 //sends updated code, description and values back to db
 function updateCanonicalCode(canonicalCode){
+    //check the botname field
+    //if the botname already exists on a different botID, then tell them that the name is taken
     
     let botName = document.getElementById("botname").value.toString().trim();
     let description = document.getElementById("description").value;
-    //alert(canonicalCode);
-    if (isEditor){
-        let botID = document.getElementById("botid").innerHTML.toString().trim();    
-        let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
-        fetch(url, {method: 'PATCH'});    
+    let botID = document.getElementById("botid")
+    if (!botID) {
+        botID = -1;
+    } else {
+        botID = botID.innerHTML
     }
-    else{
-        console.log("adding canonical code: ", canonicalCode);
-        let url = "/createBot/?botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
-        fetch(url, {method: 'POST'});
-    }
+
+    let url = "/getAllBotNames";
+    fetch(url, {})
+        .then(response => response.json())
+        .then((data) =>{
+            
+            console.log(data)
+
+            //for every element in data, check for name match
+            //if the name is a match, if the botID of that name is different
+            //tell the user
+
+            let isNameMatch = false;
+            for(let i = 0; i < data.data.length; i++){
+
+                if(botName == data.data[i].name && botID != data.data[i].key) {
+
+                    console.log("name match")
+                    alert("That name is already taken, please choose another one")
+                    isNameMatch = true;
+                    break;
+                } 
+            }
+            if (!isNameMatch){
+                if (isEditor){
+                    let botID = document.getElementById("botid").innerHTML.toString().trim();    
+                    let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
+                    fetch(url, {method: 'PATCH'});    
+                }
+                else{
+                    console.log("adding canonical code: ", canonicalCode);
+                    let url = "/createBot/?botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
+                    fetch(url, {method: 'POST'});
+                }
+                alert("Update Code Success!")
+            }
+    })
+    
 }
 
 //event listener for tabbing within textarea

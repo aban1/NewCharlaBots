@@ -11,12 +11,35 @@ function createLang(){
     var pickRandom = document.getElementById("pickRandom").value;
     var endPick = document.getElementById("endPick").value;
     
-    let url = "/createLang/?name="+ name + "&ifany="+ifAny + "&andnotany=" + andNotAny + "&ifall=" + ifAll + "&andnotall=" + 
-        andNotAll + "&replyline=" + replyLine + "&startreply=" + startReply + "&endreply=" + endReply + "&endif=" + endIf + "&pickrandom=" + pickRandom + "&endpick=" + endPick;
-    console.log(url);
+    let getLangUrl = "/getAllLanguageNames/";
+    fetch(getLangUrl, {})
+        .then(response => response.json())
+        .then((data) =>{
+            console.log(data)
+            let isNameMatch = false;
+            for(let i = 0; i < data.data.length; i++){
+                //TODO: when adding edit language functionality, make sure to not make duplicates
+                if(name == data.data[i].name) {
 
-    fetch(url, {method: "POST"});
-    
+                    alert("That language name is already taken, please choose another one")
+                    isNameMatch = true;
+                    break;
+                } 
+            } 
+
+            if(!isNameMatch) {
+                
+                let url = "/createLang/?name="+ name + "&ifany="+ifAny + "&andnotany=" + andNotAny + "&ifall=" + ifAll + "&andnotall=" + 
+                andNotAll + "&replyline=" + replyLine + "&startreply=" + startReply + "&endreply=" + endReply + "&endif=" + endIf + "&pickrandom=" + pickRandom + "&endpick=" + endPick;
+        
+            fetch(url, {method: "POST"}).then(()=>{
+                alert("Language Created!")
+            })
+                
+            }
+           
+    })
+
 }
 
 
