@@ -1,5 +1,6 @@
 var isEditor = false;
 const newline = "(nw-ln)";
+var keywords = ["if","FROM","sorry","LIKE","BETWEEN","NOT LIKE","FALSE","NULL","FROM","TRUE","NOT IN"];
 $(document).ready(function () {
 
     //get end of url to see what bot id we are looking for            
@@ -30,10 +31,18 @@ $(document).ready(function () {
         document.getElementById("description").value = description;
 
         let translatedCode = translateCanonicalCode(mappings, canonical);
-        document.getElementById("canonical").value = translatedCode;
+
+        syntaxHighlighting(mappings, translatedCode);
+
+        document.getElementById("editor").innerHTML = translatedCode;
+        
+        updateScreen($("#editor").val());
+
     })
 
+
 });
+ 
 
 //translates canonical to user code
 function translateLineToUser(mapping, line){
@@ -88,6 +97,46 @@ function translateCanonicalCode(mapping, canonicalCode){
     }
     return translatedCode;
 }
+var conds = []; //ifAny, andNotAny, ifAll, andNotAll
+var replies = []; //startReply, endReply
+var picks = []; // pickRandom, endPick
+
+function syntaxHighlighting(mapping, translatedCode){
+
+
+
+    let linesToTranslate = translatedCode.split("\n");
+
+    let mappingKeys = ["ifAny", "andNotAny", "ifAll", "andNotAll", 
+    "replyLine", "startReply", "endReply", "endIf", "pickRandom", "endPick"]
+    for (let j = 0; j < linesToTranslate.length; j++){//loops thru each line of code
+        let line = linesToTranslate[j].trim();
+        if (line == "") continue;
+  
+        for (let i = 0; i< mappingKeys.length; i++){
+ 
+            if (line.startsWith(mapping[mappingKeys[i]])){
+       
+                if (mappingKeys[i] == "ifAny" || mappingKeys[i] == "endIf" || mappingKeys[i] == "ifAll" || mappingKeys[i] == "andNotAll"){
+
+                    conds.push(mapping[mappingKeys[i]]);
+                }
+
+                else if(mappingKeys[i] == "startReply" || mappingKeys[i] == "endReply"){
+     
+                    replies.push(mapping[mappingKeys[i]]);
+                }
+
+                else if(mappingKeys[i] == "pickRandom" || mappingKeys[i] == "endPick" ){
+
+                    picks.push(mapping[mappingKeys[i]]);
+                }
+
+            }
+        }
+    }
+
+}
 
 //TODO: alert error if trying to save a bot with error
 //what constitutes as an error?
@@ -120,6 +169,8 @@ function saveBot(){
         updateCanonicalCode(canonicalCode);
     })
 }
+
+
 
 //translate a line from user language to canonical code
 function translateLineToCanonical(mapping, line){
@@ -204,27 +255,79 @@ function updateCanonicalCode(canonicalCode){
     
 }
 
-//event listener for tabbing within textarea
-document.getElementById('canonical').addEventListener('keydown', function(e) {
-    if (e.key == 'Tab') {
-      e.preventDefault();
-      var start = this.selectionStart;
-      var end = this.selectionEnd;
-  
-      // set textarea value to: text before caret + tab + text after caret
-      this.value = this.value.substring(0, start) +
-        "    " + this.value.substring(end);
-  
-      // put caret at right position again
-      this.selectionStart =
-        this.selectionEnd = start + 4;
-    }
-  });
 
     //put the languages in
     //start error checking:
         //includes spelling errors, forgot end match...
 //be able to chat with a bot
 //TODO: version history 
+// SQL keywords
+// SQL keywords
+//event listener for tabbing within textarea
+// document.getElementById('editor').addEventListener('keydown', function(e) {
+//     if (e.key == 'Tab') {
+//       e.preventDefault();
+//       var start = this.selectionStart;
+//       var end = this.selectionEnd;
+  
+//       // set textarea value to: text before caret + tab + text after caret
+//       this.value = this.value.substring(0, start) +
+//         "    " + this.value.substring(end);
+  
+//       // put caret at right position again
+//       this.selectionStart =
+//         this.selectionEnd = start + 4;
+//     }
+//   });
+  
 
+
+updateScreen($("#editor").val());
+$("#editor").on("keydown", function(e) {
+  setTimeout(() =>{
+    updateScreen($(this).val());
+  },0)
+})
+function updateScreen(text)
+{
+  $("#out").html(colorize(text.replace(/\n/g, "<br>").replace(/\t/g,"&#9;"), text.split(/\r?\n/)));
+}
+$("#editor").on('scroll', function(){
+  // set out to be the same as in
+  $("#out").css({top:-$(this).scrollTop()+"px"});   
+});
+
+
+function colorize(text, lines)
+{
+
+ for(const line of lines){
+    console.log(line)
+    if(line.includes("//")){
+        
+        comment = line.split("//")[1]
+        console.log(comment)
+        text = text.replace("//" + comment, `<span style="color:LightGreen">//${comment}</span>`)
+    }
+ }
+
+  for(const cond of conds)
+  {
+    text = text.replaceAll(cond,`<span style="color:CornflowerBlue">${cond}</span>`)
+    text = text.replaceAll(cond.toLowerCase(),`<span style="color:CornflowerBlue">${cond.toLowerCase()}</span>`)
+  }
+  for(const reply of replies)
+  {
+    text = text.replaceAll(reply,`<span style="color:DarkOrchid">${reply}</span>`)
+    text = text.replaceAll(reply.toLowerCase(),`<span style="color:DarkOrchid">${reply.toLowerCase()}</span>`)
+  }
+
+  for(const pick of picks)
+  {
+    text = text.replaceAll(pick,`<span style="color:Orchid">${pick}</span>`)
+    text = text.replaceAll(pick.toLowerCase(),`<span style="color:Orchid">${pick.toLowerCase()}</span>`)
+  }
+
+  return text
+}
 
