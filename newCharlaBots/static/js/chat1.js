@@ -45,11 +45,13 @@ function formatMessage(response){
 
     const userInput = document.getElementById("input").value;
 
+    console.log(document.getElementById("input").value)
+
     inputHeight = (userInput.length / 2) + 50;
 
     respHeight = (response.length / 2) + 50;
 
-    let tempUser = `<div class="inputMessages" style="height: ${inputHeight}px"><p class="inputText">${userInput}</p></div>`;
+    let tempUser = `<div class="inputMessages" style="height: ${inputHeight}px"><span class="inputText">${userInput}</span></div>`;
 
     let tempBot = `<div class="messages" style="height: ${respHeight}px"><span class="msgText">${response}</span></div>`;
 

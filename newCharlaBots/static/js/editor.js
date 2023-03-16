@@ -1,6 +1,5 @@
 var isEditor = false;
 const newline = "(nw-ln)";
-var keywords = ["if","FROM","sorry","LIKE","BETWEEN","NOT LIKE","FALSE","NULL","FROM","TRUE","NOT IN"];
 $(document).ready(function () {
 
     //get end of url to see what bot id we are looking for            
@@ -22,7 +21,11 @@ $(document).ready(function () {
         .then((data) =>{
         
         document.getElementById("botname").value = data.botInfo["botname"];
-        
+
+        document.getElementById("titleText").innerHTML = "Edit " + data.botInfo["botname"];
+
+        document.getElementById("editCode").innerHTML = "Edit " + data.botInfo["botname"] +"'s Code Below &#x2193;"
+
         let canonical = data.botInfo["canonical"];
 
         let mappings = data.langInfo;
@@ -103,8 +106,6 @@ var picks = []; // pickRandom, endPick
 
 function syntaxHighlighting(mapping, translatedCode){
 
-
-
     let linesToTranslate = translatedCode.split("\n");
 
     let mappingKeys = ["ifAny", "andNotAny", "ifAll", "andNotAll", 
@@ -151,7 +152,8 @@ function saveBot(){
         .then((data) =>{
 
         let canonicalCode = "";
-        let translatedCode = document.getElementById("canonical").value; 
+        let translatedCode = document.getElementById("editor").value; 
+  
         let translatedLines = translatedCode.split("\n");
         let mappings = data;
     
@@ -169,8 +171,6 @@ function saveBot(){
         updateCanonicalCode(canonicalCode);
     })
 }
-
-
 
 //translate a line from user language to canonical code
 function translateLineToCanonical(mapping, line){
@@ -302,7 +302,6 @@ function colorize(text, lines)
 {
 
  for(const line of lines){
-    console.log(line)
     if(line.includes("//")){
         
         comment = line.split("//")[1]

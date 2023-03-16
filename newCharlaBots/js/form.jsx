@@ -225,7 +225,7 @@ class Form extends React.Component {
         <div>
         {(this.state.action == '') ?(
           <div>
-            I want to: <br></br>
+            <br></br>
               <div className='options'>
                 {allOptions}
               </div>

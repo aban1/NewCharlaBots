@@ -12,16 +12,15 @@
     <div style="visibility: hidden;" id="botid"> {{botid}} </div>
     <div class="bar">
         <div class="left">
-
+            <button class="btn"><a href="/"><i class="fa fa-home"></i> Home</a></button> 
         </div>
         <div class="right">
-            <button class="btn"><a href="/"><i class="fa fa-home"></i> Home</a></button> 
+            <div id="title">
+                <h1 id="titleText"> </h1>
+            </div>
         </div>
     </div>
     <div id = "form">
-        <div id="title">
-            <h1 id="titleText"> </h1>
-        </div>
         <div class = "Transcript"> 
             <div id="messages"></div>
         </div>
@@ -57,7 +56,7 @@
         font-size: 30px;
     }
     body{
-        background-color :  #d7e5f9;
+        background-color :  #b1c8e9;
     }
 
     .inputMessages {
@@ -69,20 +68,10 @@
         width: 500px;
         height: 50px;
         text-align: left;
-        font: 400 .9em 'Open Sans', sans-serif;
+        font: 400 .9em Tahoma, sans-serif;
         border: 1px solid #dfd087;
         border-radius: 10px;
 
-    }
-
-    .btn {
-        background-color: #eee; /* Blue background */
-        border: none; /* Remove borders */
-        color: white; /* White text */
-        padding: 12px 16px; /* Some padding */
-        font-size: 20px; /* Set a font size */
-        cursor: pointer; /* Mouse pointer on hover */
-        text-decoration: none;
     }
 
     a:link{
@@ -99,7 +88,7 @@
         width: 500px;
         height: 50px;
         text-align: left;
-        font: 400 .9em 'Open Sans', sans-serif;
+        font: 400 .9em Tahoma, sans-serif;
         border: 1px solid #97C6E3;
         border-radius: 10px;
         resize: both;
@@ -145,8 +134,11 @@
 
     .inputText{
         overflow: hidden;
-        white-space: nowrap;
+        white-space: initial;
+
         font-size: 1.6rem;
+
+        display:inline-block; 
     } 
 
 @keyframes typing {
@@ -216,9 +208,43 @@
 }
 
 .Transcript{
-    height: 300px;
+    height: 39vw;
     overflow-y: scroll;
+    background: #eee;
 }
+
+.right{
+        text-align: center;
+    }
+
+.left{
+    float: left
+}
+
+.btn {
+  text-decoration: none;
+  background-color: rgb(223, 246, 255); /* Blue background */
+  padding: 10px; /* Some padding */
+  font-size: 20px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  
+  border-radius: 4px;
+  font: 16px Tahoma, sans-serif;
+}
+.btn:hover {
+    background-color: rgb(196, 186, 215);
+    cursor: pointer;
+}
+
+h1{
+    font-family: Tahoma, sans-serif;
+}
+
+:hover, a:visited, a:link, a:active
+    {
+        text-decoration: none;
+        color: black;
+    }
 
 </style>
 
