@@ -1,0 +1,105 @@
+textarea {
+    width: 40%;
+    height: 150px;
+    padding: 12px 10px;
+    margin-left:20px;
+    vertical-align:middle;
+    display:inline-block; 
+    *display: inline;     /* for IE7*/
+    zoom:1; 
+    box-sizing: border-box;
+    border: 2px solid  rgb(171, 196, 206);
+    background-color: rgb(223, 246, 255);
+    resize: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+#saveBtn{
+  background-color: rgb(223, 246, 255); /* Blue background */
+  padding: 10px; /* Some padding */
+ /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  text-decoration: none;
+  border-radius: 4px;
+  font: 16px Tahoma, sans-serif;
+  right: 41%;
+  position: absolute;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#saveBtn:hover {
+        background-color: rgb(196, 186, 215);
+        cursor: pointer;
+}
+
+.code-editor{
+  box-sizing: border-box;
+  width:100%;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  padding: 30px;
+  border: none;
+  outline: none;
+  line-break: anywhere;
+  white-space: pre-wrap;
+  color:white;
+  
+}
+.code-editor-background{
+  resize: none;
+  background-color:rgb(44, 44, 44);
+  caret-color:white;
+  color: transparent;
+}
+
+.code-editor-background::selection {
+  color: transparent;
+  background: #239123;
+}
+.code-editor-foreground{
+  pointer-events: none; left:1px;top:1px
+}
+
+.code-editor-container{
+    overflow: hidden;
+    width: 98vw;
+    height: 90vh;
+    position:relative;
+  }
+  
+#editCode{
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;  
+    padding-left: 30px;
+    text-align: left;
+    margin-right: 290px;
+}
+
+#saveBtn{
+    background-color: rgb(223, 246, 255); /* Blue background */
+    padding: 10px; /* Some padding */
+   /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    text-decoration: none;
+    border-radius: 4px;
+    font: 16px Tahoma, sans-serif;
+    right: 41%;
+    position: absolute;
+    margin-top: 10px;
+  
+  }
+  
+  #saveBtn:hover {
+          background-color: rgb(196, 186, 215);
+          cursor: pointer;
+  }

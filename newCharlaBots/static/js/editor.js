@@ -227,30 +227,41 @@ function updateCanonicalCode(canonicalCode){
             //if the name is a match, if the botID of that name is different
             //tell the user
 
-            let isNameMatch = false;
-            for(let i = 0; i < data.data.length; i++){
+            
+            if(botName.length == 0){
+                alert("Name can't be empty")
 
-                if(botName == data.data[i].name && botID != data.data[i].key) {
+            }
 
-                    console.log("name match")
-                    alert("That name is already taken, please choose another one")
-                    isNameMatch = true;
-                    break;
-                } 
-            }
-            if (!isNameMatch){
-                if (isEditor){
-                    let botID = document.getElementById("botid").innerHTML.toString().trim();    
-                    let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
-                    fetch(url, {method: 'PATCH'});    
+            else{
+                let isNameMatch = false;
+                for(let i = 0; i < data.data.length; i++){
+    
+                    if(botName == data.data[i].name && botID != data.data[i].key) {
+    
+                        console.log("name match")
+                        alert("That name is already taken, please choose another one")
+                        isNameMatch = true;
+                        break;
+                    } 
                 }
-                else{
-                    console.log("adding canonical code: ", canonicalCode);
-                    let url = "/createBot/?botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
-                    fetch(url, {method: 'POST'});
+    
+                if (!isNameMatch){
+                    if (isEditor){
+                        let botID = document.getElementById("botid").innerHTML.toString().trim();    
+                        let url = "/updateBot/?botID=" + botID + "&botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
+                        fetch(url, {method: 'PATCH'});    
+                    }
+                    else{
+                        console.log("adding canonical code: ", canonicalCode);
+                        let url = "/createBot/?botName=" + botName + "&canonicalCode=" + canonicalCode + "&description=" + description;
+                        fetch(url, {method: 'POST'});
+                    }
+                    alert("Update Code Success!")
                 }
-                alert("Update Code Success!")
             }
+
+
     })
     
 }

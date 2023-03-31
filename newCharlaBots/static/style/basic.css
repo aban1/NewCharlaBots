@@ -1,0 +1,56 @@
+/* Applied to all pages except index */
+
+/* Header Styling for all pages*/
+.right{
+    text-align: center;
+}
+
+.left{
+    float: left
+}
+
+h1{
+    font-family: Tahoma, sans-serif;
+    font-size: 2em;
+}
+
+h2{
+    font-family: Tahoma, sans-serif;
+    font-size: 1em;
+}
+
+/* Button styling for all pages */
+.btn {
+    text-decoration: none;
+    background-color: rgb(223, 246, 255); 
+    padding: 10px; 
+    font-size: 20px; 
+    cursor: pointer; 
+    border-radius: 4px;
+    font: 16px Tahoma, sans-serif;
+}
+
+.btn:hover {
+    background-color: rgb(196, 186, 215);
+    cursor: pointer;
+}
+
+:hover, a:visited, a:link, a:active{
+    text-decoration: none;
+    color: black;
+}
+
+/* form styling for all pages */
+#form{
+    text-align: left;
+    font: 22px Tahoma, sans-serif;
+}
+
+body{
+    background-color :  #d7e5f9;
+    overflow-x: hidden;
+}
+
+#canonical{
+    width: 70%;
+}

@@ -1,0 +1,33 @@
+label {
+    display:inline-block;
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    /* float: left; */
+    padding-top: 5px;
+    text-align: right;
+    width: 150px;
+    vertical-align: top;
+    
+}
+
+input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display:inline-block; 
+    *display: inline;     /* for IE7*/
+    zoom:1;              /* for IE7*/
+    margin-left:20px;
+    box-sizing: border-box;
+    border: 2px solid  rgb(171, 196, 206);
+    background-color: rgb(223, 246, 255);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+    
+}
+
+#form{
+    text-align: left;
+    font: 22px Tahoma, sans-serif;
+}

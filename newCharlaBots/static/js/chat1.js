@@ -45,11 +45,9 @@ function formatMessage(response){
 
     const userInput = document.getElementById("input").value;
 
-    console.log(document.getElementById("input").value)
+    inputHeight = (userInput.length / 2) + 60;
 
-    inputHeight = (userInput.length / 2) + 50;
-
-    respHeight = (response.length / 2) + 50;
+    respHeight = (response.length / 2) + 60;
 
     let tempUser = `<div class="inputMessages" style="height: ${inputHeight}px"><span class="inputText">${userInput}</span></div>`;
 
@@ -68,6 +66,7 @@ function formatMessage(response){
 
 }
 
+// Send text with enter key
 document.getElementById("input").addEventListener('keypress', function(e){
     if (e.key === 'Enter'){
         e.preventDefault();

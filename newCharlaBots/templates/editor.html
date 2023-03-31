@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/style/basic.css">
+<link rel="stylesheet" href="../static/style/codeEditor.css">
+<link rel="stylesheet" href="../static/style/form.css">
 <html lang="en">
 <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -10,6 +13,7 @@
 </head>
 
 <body>
+    <!-- Header bar -->
     <div class="bar">
       <div class="left">
         <button class="btn"><a href="/"><i class="fa fa-home"></i> Home</a></button> 
@@ -25,199 +29,34 @@
     <div style="visibility: hidden;" id="langid"> {{botid[1]}} </div>
 
     <div id = "form">
+      <!-- bot name input -->
       <div class="block">
         <label id = "name" for="botname">Name:</label>
         <input type="text" id="botname" name="botname">
       </div>
-
-
-      <!-- todo: change rows to be a percentage -->
+      <!-- bot description input -->
       <div class="block">
         <label id = "name" for="description">Description:</label>
         <textarea type="text" id="description" name="description" rows="10" cols="20"></textarea>
       </div>
 
+    <!-- text above code area -->
     <div id="aboveCode">
       <p id = "editCode" for="canonical"></p>
       <button id="saveBtn" type="submit" onclick = "saveBot()"><i class="fa fa-floppy-o"></i> Save Bot</button> 
     </div>
-    <!-- <textarea type="text" id="" name="canonical" rows="20" cols="20"></textarea> -->
-    <!-- <div id="canonical" contenteditable="true"></div><br> -->
-    <!-- <div id="editor" contenteditable="true"></div> -->
+
+    <!-- code area -->
     <div class="code-editor-container">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
               <textarea class="code-editor code-editor-background" id="editor"></textarea>
               <div class="code-editor code-editor-foreground" id="out"></div>
     </div>
-    <div>
-    <br>
+    <!-- code save button at bottom -->
     <button id="saveBtn" type="submit" onclick = "saveBot()"><i class="fa fa-floppy-o"></i> Save Bot</button> 
-    </div>
-
+    <br>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script> 
 </body>
-
-<style>
-
-
-#form{
-    text-align: left;
-    font: 22px Tahoma, sans-serif;
-}
-body{
-  overflow-x: hidden;
-  background-color :  #b1c8e9;
-}
-.code-editor-container{
-  overflow: hidden;
-  width: 98vw;
-  height: 90vh;
-  position:relative;
-}
-
-:hover, a:visited, a:link, a:active
-{
-    text-decoration: none;
-    color: black;
-}
-
-.code-editor{
-  box-sizing: border-box;
-  width:100%;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  padding: 10px;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.5rem;
-  padding: 30px;
-  border: none;
-  outline: none;
-  line-break: anywhere;
-  white-space: pre-wrap;
-  color:white;
-  
-}
-.code-editor-background{
-  resize: none;
-  background-color:rgb(44, 44, 44);
-  caret-color:white;
-  color: transparent;
-}
-
-.code-editor-background::selection {
-  color: transparent;
-  background: #239123;
-}
-.code-editor-foreground{
-  pointer-events: none; left:1px;top:1px
-}
-
-.btn {
-  background-color: rgb(223, 246, 255); /* Blue background */
-  padding: 10px; /* Some padding */
-  font-size: 20px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  text-decoration: none;
-  border-radius: 4px;
-  font: 16px Tahoma, sans-serif;
-}
-.btn:hover {
-        background-color: rgb(196, 186, 215);
-        cursor: pointer;
-}
-  
-.right{
-        text-align: center;
-    }
-
-.left{
-    float: left
-}
-
-h1{
-  font-family: Tahoma, sans-serif;
-}
-
-#editCode{
-  display:inline-block;
-    *display: inline;     /* for IE7*/
-    zoom:1;  
-    padding-left: 30px;
-    text-align: left;
-    margin-right: 290px;
-}
-
-label {
-    display:inline-block;
-    *display: inline;     /* for IE7*/
-    zoom:1;              /* for IE7*/
-    /* float: left; */
-    padding-top: 5px;
-    text-align: right;
-    width: 150px;
-    vertical-align: top;
-    
-}
-
-input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    display:inline-block; 
-    *display: inline;     /* for IE7*/
-    zoom:1;              /* for IE7*/
-    margin-left:20px;
-    box-sizing: border-box;
-    border: 2px solid  rgb(171, 196, 206);
-    background-color: rgb(223, 246, 255);
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    padding: 5px 10px;
-    border-radius: 4px;
-    
-}
-
-textarea {
-    width: 40%;
-    height: 150px;
-    padding: 12px 10px;
-    margin-left:20px;
-    vertical-align:middle;
-    display:inline-block; 
-    *display: inline;     /* for IE7*/
-    zoom:1; 
-    box-sizing: border-box;
-    border: 2px solid  rgb(171, 196, 206);
-    background-color: rgb(223, 246, 255);
-    resize: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    border-radius: 4px;
-}
-
-#saveBtn{
-  background-color: rgb(223, 246, 255); /* Blue background */
-  padding: 10px; /* Some padding */
- /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  text-decoration: none;
-  border-radius: 4px;
-  font: 16px Tahoma, sans-serif;
-  right: 41%;
-  position: absolute;
-  margin-top: 10px;
-
-}
-
-#saveBtn:hover {
-        background-color: rgb(196, 186, 215);
-        cursor: pointer;
-}
-
-
-</style>
 
 </html>
