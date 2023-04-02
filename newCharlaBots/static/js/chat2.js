@@ -1,3 +1,5 @@
+// chat with 2 bots
+
 let canonicalCode = [];
 $(document).ready(onReady());
 
@@ -9,6 +11,7 @@ async function onReady() {
 
     fetch(url, {})
         .then(response => response.json())
+        // loads headers that include bot names
         .then((data) =>{
                 let botname1 = data.data1["botname"];
                 let botname2 = data.data2["botname"];
@@ -21,23 +24,26 @@ async function onReady() {
     canonicalCode = await getCanonicalCode(botID1, botID2);
 }
 
+// gets canonical code for both bots
 async function getCanonicalCode(botID1, botID2){
+
+    // gets bot1 canonical code
     let url = "/getBotData/?botid=" + (botID1).toString().trim();
     let canonical1 = fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
-        return data.data["canonical"];
+            return data.data["canonical"];
         }
     )
     let canonicalCode1 = await canonical1;
     canonicalCode.push(canonicalCode1);
 
+    // gets bot2 canonical code
     url = "/getBotData/?botid=" + (botID2).toString().trim();
     let canonical2 = fetch(url, {})
         .then(response => response.json())
         .then((data) =>{
-        // console.log("input " + document.getElementById("inpu
-        return data.data["canonical"];
+            return data.data["canonical"];
         }
     )
     let canonicalCode2 = await canonical2;
@@ -46,6 +52,7 @@ async function getCanonicalCode(botID1, botID2){
     return canonicalCode;
 }
 
+// formats and appends first message (bot1)
 function startChat(){
     let initialMessage = document.getElementById("input").value;
 
@@ -57,6 +64,8 @@ function startChat(){
     chatHelper();
     document.getElementById("input").value = initialMessage;
 }
+
+// appends the rest of the chat messages
 //bot1 should start the chat
 async function chatHelper(){
     
@@ -67,7 +76,7 @@ async function chatHelper(){
 
         let canonical = (i % 2 == 1) ? canonicalCode[0] : canonicalCode[1];
         let message = sendMessageHelper(canonical);
-        console.log(message);
+        console.log(message)
         messages.push(message);
         document.getElementById("input").value = message;
 
@@ -75,15 +84,18 @@ async function chatHelper(){
 
         let tempInput = document.querySelector(".Transcript");
 
+        // appends bot1 message
         if (i % 2 == 1){
             let bot1Msg = `<div class="inputMessages" style="height: ${msgHeight}px"><span class="inputText">${message}</span></div>`;
             tempInput.insertAdjacentHTML("beforeend", bot1Msg);
         }
+
+        // appends bot2 message
         else{
             let tempBot = `<div class="messages" style="height: ${msgHeight}px"><span class="msgText">${message}</span></div>`;
             tempInput.insertAdjacentHTML("beforeend", tempBot); 
         }
     }
-    console.log(messages)
+
     return messages
 }

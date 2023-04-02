@@ -1,4 +1,5 @@
 //array of messages sent by bot1/user and bot2
+
 let bot1Messages = [];
 let bot2Messages = [];
 

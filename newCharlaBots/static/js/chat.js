@@ -305,11 +305,13 @@ function splitOnNewline(input){
     return output;
 }
 
+//cleare input box of text after entered
 function eraseTextInput(){
     document.getElementById("input").value = "";
     document.getElementById("input").innerHTML = "";
 }
 
+//gets response associated with caconical code
 function sendMessageHelper(canonicalCode){
     let blocks = getBlocks(canonicalCode);
     let canonicalArray = createCanonicalArray(blocks);
@@ -320,8 +322,6 @@ function sendMessageHelper(canonicalCode){
         let input = document.getElementById("input").value;
         response = splitOnNewline(chat(canonicalArray[i], input));
         if(response != ""){
-            // console.log( response);
-
             return response;
         }
     }

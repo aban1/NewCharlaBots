@@ -7,6 +7,7 @@ $(document).ready(function () {
     //run the rest of ready func only if editing
     if (!isEditor) return;
     
+    // gets botid
     let botID = "";
     if (document.getElementById("botid")){
         botID = document.getElementById("botid").innerHTML;
@@ -20,23 +21,20 @@ $(document).ready(function () {
         .then(response => response.json())
         .then((data) =>{
         
+        // loads titles that use bot names
         document.getElementById("botname").value = data.botInfo["botname"];
-
         document.getElementById("titleText").innerHTML = "Edit " + data.botInfo["botname"];
-
         document.getElementById("editCode").innerHTML = "Edit " + data.botInfo["botname"] +"'s Code Below &#x2193;"
 
-        let canonical = data.botInfo["canonical"];
-
-        let mappings = data.langInfo;
-        
+        // loads existing bot description
         let description = data.botInfo["description"];
         document.getElementById("description").value = description;
 
+        // loads existing bot code
+        let canonical = data.botInfo["canonical"];
+        let mappings = data.langInfo;
         let translatedCode = translateCanonicalCode(mappings, canonical);
-
         syntaxHighlighting(mappings, translatedCode);
-
         document.getElementById("editor").innerHTML = translatedCode;
         
         updateScreen($("#editor").val());
@@ -100,17 +98,21 @@ function translateCanonicalCode(mapping, canonicalCode){
     }
     return translatedCode;
 }
+
+// create more vectors here for more color categories for syntax  highlighting https://stackoverflow.com/questions/37139076/change-color-of-specific-words-in-textarea */
 var conds = []; //ifAny, andNotAny, ifAll, andNotAll
 var replies = []; //startReply, endReply
 var picks = []; // pickRandom, endPick
 
+// applies syntax highlighting to code editting area
 function syntaxHighlighting(mapping, translatedCode){
 
     let linesToTranslate = translatedCode.split("\n");
 
     let mappingKeys = ["ifAny", "andNotAny", "ifAll", "andNotAll", 
     "replyLine", "startReply", "endReply", "endIf", "pickRandom", "endPick"]
-    for (let j = 0; j < linesToTranslate.length; j++){//loops thru each line of code
+
+    for (let j = 0; j < linesToTranslate.length; j++){
         let line = linesToTranslate[j].trim();
         if (line == "") continue;
   
@@ -221,31 +223,27 @@ function updateCanonicalCode(canonicalCode){
         .then(response => response.json())
         .then((data) =>{
             
-            console.log(data)
-
-            //for every element in data, check for name match
-            //if the name is a match, if the botID of that name is different
-            //tell the user
-
-            
+            // can't make bot name empty
             if(botName.length == 0){
                 alert("Name can't be empty")
 
             }
 
             else{
+
+                //checks for duplicate name 
                 let isNameMatch = false;
                 for(let i = 0; i < data.data.length; i++){
     
                     if(botName == data.data[i].name && botID != data.data[i].key) {
     
-                        console.log("name match")
                         alert("That name is already taken, please choose another one")
                         isNameMatch = true;
                         break;
                     } 
                 }
-    
+                
+                // does not allow you to edit a bot name to match another one
                 if (!isNameMatch){
                     if (isEditor){
                         let botID = document.getElementById("botid").innerHTML.toString().trim();    
@@ -266,33 +264,7 @@ function updateCanonicalCode(canonicalCode){
     
 }
 
-
-    //put the languages in
-    //start error checking:
-        //includes spelling errors, forgot end match...
-//be able to chat with a bot
-//TODO: version history 
-// SQL keywords
-// SQL keywords
-//event listener for tabbing within textarea
-// document.getElementById('editor').addEventListener('keydown', function(e) {
-//     if (e.key == 'Tab') {
-//       e.preventDefault();
-//       var start = this.selectionStart;
-//       var end = this.selectionEnd;
-  
-//       // set textarea value to: text before caret + tab + text after caret
-//       this.value = this.value.substring(0, start) +
-//         "    " + this.value.substring(end);
-  
-//       // put caret at right position again
-//       this.selectionStart =
-//         this.selectionEnd = start + 4;
-//     }
-//   });
-  
-
-
+// code edit area functionality
 updateScreen($("#editor").val());
 $("#editor").on("keydown", function(e) {
   setTimeout(() =>{
@@ -308,36 +280,41 @@ $("#editor").on('scroll', function(){
   $("#out").css({top:-$(this).scrollTop()+"px"});   
 });
 
-
+// colors words for syntax highlighting 
 function colorize(text, lines)
 {
 
- for(const line of lines){
-    if(line.includes("//")){
-        
-        comment = line.split("//")[1]
-        console.log(comment)
-        text = text.replace("//" + comment, `<span style="color:LightGreen">//${comment}</span>`)
+    // colors comments green
+    for(const line of lines){
+        if(line.includes("//")){
+            
+            comment = line.split("//")[1]
+            console.log(comment)
+            text = text.replace("//" + comment, `<span style="color:LightGreen">//${comment}</span>`)
+        }
     }
- }
 
-  for(const cond of conds)
-  {
-    text = text.replaceAll(cond,`<span style="color:CornflowerBlue">${cond}</span>`)
-    text = text.replaceAll(cond.toLowerCase(),`<span style="color:CornflowerBlue">${cond.toLowerCase()}</span>`)
-  }
-  for(const reply of replies)
-  {
-    text = text.replaceAll(reply,`<span style="color:DarkOrchid">${reply}</span>`)
-    text = text.replaceAll(reply.toLowerCase(),`<span style="color:DarkOrchid">${reply.toLowerCase()}</span>`)
-  }
+    // colors conditionals CornflowerBlue
+    for(const cond of conds)
+    {
+        text = text.replaceAll(cond,`<span style="color:CornflowerBlue">${cond}</span>`)
+        text = text.replaceAll(cond.toLowerCase(),`<span style="color:CornflowerBlue">${cond.toLowerCase()}</span>`)
+    }
 
-  for(const pick of picks)
-  {
-    text = text.replaceAll(pick,`<span style="color:Orchid">${pick}</span>`)
-    text = text.replaceAll(pick.toLowerCase(),`<span style="color:Orchid">${pick.toLowerCase()}</span>`)
-  }
+    // colors reply words DarkOrchid
+    for(const reply of replies)
+    {
+        text = text.replaceAll(reply,`<span style="color:DarkOrchid">${reply}</span>`)
+        text = text.replaceAll(reply.toLowerCase(),`<span style="color:DarkOrchid">${reply.toLowerCase()}</span>`)
+    }
 
-  return text
+    // colors pick words Orchid
+    for(const pick of picks)
+    {
+        text = text.replaceAll(pick,`<span style="color:Orchid">${pick}</span>`)
+        text = text.replaceAll(pick.toLowerCase(),`<span style="color:Orchid">${pick.toLowerCase()}</span>`)
+    }
+
+    return text
 }
 

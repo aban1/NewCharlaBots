@@ -1,3 +1,5 @@
+// create language 
+
 function createLang(){
     var name = document.getElementById("langname").value;
     var ifAny = document.getElementById("ifAny").value;
@@ -15,16 +17,19 @@ function createLang(){
     fetch(getLangUrl, {})
         .then(response => response.json())
         .then((data) =>{
-            console.log(data)
+            
             let isNameMatch = false;
 
+            //does not allow empty bot names
             if(name.length == 0){
                 alert("Language Name can't be empty.")
             }
 
             else{
+
+                //does not allow duplicate bot names
                 for(let i = 0; i < data.data.length; i++){
-                    //TODO: when adding edit language functionality, make sure to not make duplicates
+                
                     if(name == data.data[i].name) {
     
                         alert("That language name is already taken, please choose another one")
@@ -33,6 +38,7 @@ function createLang(){
                     } 
                 } 
     
+                // adds new language to database
                 if(!isNameMatch) {
                     
                     let url = "/createLang/?name="+ name + "&ifany="+ifAny + "&andnotany=" + andNotAny + "&ifall=" + ifAll + "&andnotall=" + 

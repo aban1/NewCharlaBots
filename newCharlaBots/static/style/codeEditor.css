@@ -1,38 +1,23 @@
+/* aaplied to code editor */
+
+/* all needed for code edit area */
+/* code edit area is a textarea whos text is hidden and overlaid https://stackoverflow.com/questions/37139076/change-color-of-specific-words-in-textarea */
 textarea {
-    width: 40%;
-    height: 150px;
-    padding: 12px 10px;
-    margin-left:20px;
-    vertical-align:middle;
-    display:inline-block; 
-    *display: inline;     /* for IE7*/
-    zoom:1; 
-    box-sizing: border-box;
-    border: 2px solid  rgb(171, 196, 206);
-    background-color: rgb(223, 246, 255);
-    resize: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    border-radius: 4px;
-}
-
-#saveBtn{
-  background-color: rgb(223, 246, 255); /* Blue background */
-  padding: 10px; /* Some padding */
- /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  text-decoration: none;
+  width: 40%;
+  height: 150px;
+  padding: 12px 10px;
+  margin-left:20px;
+  vertical-align:middle;
+  display:inline-block; 
+  *display: inline;
+  zoom:1; 
+  box-sizing: border-box;
+  border: 2px solid  rgb(171, 196, 206);
+  background-color: rgb(223, 246, 255);
+  resize: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
   border-radius: 4px;
-  font: 16px Tahoma, sans-serif;
-  right: 41%;
-  position: absolute;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-#saveBtn:hover {
-        background-color: rgb(196, 186, 215);
-        cursor: pointer;
 }
 
 .code-editor{
@@ -70,36 +55,36 @@ textarea {
 }
 
 .code-editor-container{
-    overflow: hidden;
-    width: 98vw;
-    height: 90vh;
-    position:relative;
-  }
+  overflow: hidden;
+  width: 98vw;
+  height: 90vh;
+  position:relative;
+}
   
 #editCode{
-    display:inline-block;
-    *display: inline;     /* for IE7*/
-    zoom:1;  
-    padding-left: 30px;
-    text-align: left;
-    margin-right: 290px;
+  display:inline-block;
+  *display: inline;
+  zoom:1;  
+  padding-left: 30px;
+  text-align: left;
+  margin-right: 290px;
 }
 
+/* save code button */
 #saveBtn{
-    background-color: rgb(223, 246, 255); /* Blue background */
-    padding: 10px; /* Some padding */
-   /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-    text-decoration: none;
-    border-radius: 4px;
-    font: 16px Tahoma, sans-serif;
-    right: 41%;
-    position: absolute;
-    margin-top: 10px;
-  
-  }
-  
-  #saveBtn:hover {
-          background-color: rgb(196, 186, 215);
-          cursor: pointer;
-  }
+  background-color: rgb(223, 246, 255);
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 4px;
+  font: 16px Tahoma, sans-serif;
+  right: 41%;
+  position: absolute;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#saveBtn:hover {
+  background-color: rgb(196, 186, 215);
+  cursor: pointer;
+}

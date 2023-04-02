@@ -1,21 +1,27 @@
+/* styling for forms */
+/* applied to create bot, create lang, and bot editor */
+
+#form{
+    text-align: left;
+    font: 22px Tahoma, sans-serif;
+}
+
 label {
     display:inline-block;
-    *display: inline;     /* for IE7*/
-    zoom:1;              /* for IE7*/
-    /* float: left; */
+    *display: inline;   
+    zoom:1;           
     padding-top: 5px;
     text-align: right;
     width: 150px;
     vertical-align: top;
-    
 }
 
 input {
     margin-top: 5px;
     margin-bottom: 5px;
     display:inline-block; 
-    *display: inline;     /* for IE7*/
-    zoom:1;              /* for IE7*/
+    *display: inline; 
+    zoom:1;            
     margin-left:20px;
     box-sizing: border-box;
     border: 2px solid  rgb(171, 196, 206);
@@ -24,10 +30,4 @@ input {
     font-size: 1rem;
     padding: 5px 10px;
     border-radius: 4px;
-    
-}
-
-#form{
-    text-align: left;
-    font: 22px Tahoma, sans-serif;
 }
