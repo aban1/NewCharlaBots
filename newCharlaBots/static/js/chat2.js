@@ -3,6 +3,9 @@
 let canonicalCode = [];
 $(document).ready(onReady());
 
+let botname1 = ""
+let botname2 = ""
+
 async function onReady() {
     let botID1 = document.getElementById("botid1").innerHTML;
     let botID2 = document.getElementById("botid2").innerHTML;
@@ -13,8 +16,8 @@ async function onReady() {
         .then(response => response.json())
         // loads headers that include bot names
         .then((data) =>{
-                let botname1 = data.data1["botname"];
-                let botname2 = data.data2["botname"];
+                botname1 = data.data1["botname"];
+                botname2 = data.data2["botname"];
                 document.getElementById("titleText").innerHTML = "Have " + botname1 + " Chat with " + botname2 + "!";
                 document.getElementById("bot1").innerHTML = botname1;
                 document.getElementById("bot2").innerHTML = botname2;
@@ -76,7 +79,10 @@ async function chatHelper(){
 
         let canonical = (i % 2 == 1) ? canonicalCode[0] : canonicalCode[1];
         let message = sendMessageHelper(canonical);
-        console.log(message)
+
+        if (message == null){
+                message = ""
+        }
         messages.push(message);
         document.getElementById("input").value = message;
 
